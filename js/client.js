@@ -216,7 +216,7 @@ function toId() {
 		 * domain in order to have access to the correct cookies.
 		 */
 		getActionPHP: function () {
-			var ret = '/~~' + Config.server.id + '/action.php';
+			var ret = /*'/~~' + Config.server.id + */'/action.php';
 			if (Config.testclient) {
 				ret = 'https://' + Config.routes.client + ret;
 			}
@@ -283,7 +283,7 @@ function toId() {
 				app.addPopupMessage("Usernames must contain at least one letter.");
 				return;
 			}
-
+			
 			if (this.get('userid') !== userid) {
 				var self = this;
 				$.post(this.getActionPHP(), {

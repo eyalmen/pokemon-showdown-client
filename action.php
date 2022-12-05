@@ -1,10 +1,8 @@
 <?php
 
 /*
-
 License: GPLv2 or later
   <http://www.gnu.org/licenses/gpl-2.0.html>
-
 */
 
 error_reporting(E_ALL);

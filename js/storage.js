@@ -508,54 +508,68 @@ Storage.initTestClient = function () {
 	Storage.whenTeamsLoaded.load();
 
 	var sid = null;
-	if (typeof POKEMON_SHOWDOWN_TESTCLIENT_KEY === 'string') {
-		sid = POKEMON_SHOWDOWN_TESTCLIENT_KEY.replace(/\%2C/g, ',');
+	// if (typeof POKEMON_SHOWDOWN_TESTCLIENT_KEY === 'string') {
+	// 	sid = POKEMON_SHOWDOWN_TESTCLIENT_KEY.replace(/\%2C/g, ',');
+	// }
+	// check for a sid cookie
+	if (document.cookie) {
+		const value = `; ${document.cookie}`;
+		const parts = value.split(`; sid=`);
+		if (parts.length === 2) sid =  parts.pop().split(';').shift();
 	}
 
 	Storage.whenAppLoaded(function (app) {
 		var get = $.get;
 		$.get = function (uri, data, callback, type) {
-			if (type === 'html') {
-				uri += '&testclient';
-			}
-			if (data) {
-				uri += '?testclient';
-				for (var i in data) {
-					uri += '&' + i + '=' + encodeURIComponent(data[i]);
-				}
-			}
-			if (uri[0] === '/') { // relative URI
-				uri = Dex.resourcePrefix + uri.substr(1);
-			}
+			// if (type === 'html') {
+			// 	uri += '&testclient';
+			// }
+			// if (data) {
+			// 	uri += '?testclient';
+			// 	for (var i in data) {
+			// 		uri += '&' + i + '=' + encodeURIComponent(data[i]);
+			// 	}
+			// }
+			// if (uri[0] === '/') { // relative URI
+			// 	uri = Dex.resourcePrefix + uri.substr(1);
+			// }
 
+			// if (sid) {
+				// data.sid = sid;
+				// get(uri, data, callback, type);
+			// } /*else {*/
+			// 	app.addPopup(ProxyPopup, {uri: uri, callback: callback});
+			// }
 			if (sid) {
 				data.sid = sid;
-				get(uri, data, callback, type);
-			} else {
-				app.addPopup(ProxyPopup, {uri: uri, callback: callback});
 			}
+			get(uri, data, callback, type);
 		};
 		var post = $.post;
 		$.post = function (uri, data, callback, type) {
-			if (type === 'html') {
-				uri += '&testclient';
-			}
-			if (uri[0] === '/') { //relative URI
-				uri = Dex.resourcePrefix + uri.substr(1);
-			}
+			// if (type === 'html') {
+			// 	uri += '&testclient';
+			// }
+			// if (uri[0] === '/') { //relative URI
+			// 	uri = Dex.resourcePrefix + uri.substr(1);
+			// }
 
+			// if (sid) {
+				// data.sid = sid;
+				// post(uri, data, callback, type);
+			// } /*else {*/
+			// 	var src = '<!DOCTYPE html><html><body><form action="' + BattleLog.escapeHTML(uri) + '" method="POST">';
+			// 	src += '<input type="hidden" name="testclient">';
+			// 	for (var i in data) {
+			// 		src += '<input type=hidden name="' + i + '" value="' + BattleLog.escapeHTML(data[i]) + '">';
+			// 	}
+			// 	src += '<input type=submit value="Please click this button first."></form></body></html>';
+			// 	app.addPopup(ProxyPopup, {uri: "data:text/html;charset=UTF-8," + encodeURIComponent(src), callback: callback});
+			// }
 			if (sid) {
 				data.sid = sid;
-				post(uri, data, callback, type);
-			} else {
-				var src = '<!DOCTYPE html><html><body><form action="' + BattleLog.escapeHTML(uri) + '" method="POST">';
-				src += '<input type="hidden" name="testclient">';
-				for (var i in data) {
-					src += '<input type=hidden name="' + i + '" value="' + BattleLog.escapeHTML(data[i]) + '">';
-				}
-				src += '<input type=submit value="Please click this button first."></form></body></html>';
-				app.addPopup(ProxyPopup, {uri: "data:text/html;charset=UTF-8," + encodeURIComponent(src), callback: callback});
 			}
+			post(uri, data, callback, type);
 		};
 		Storage.whenPrefsLoaded.load();
 	});

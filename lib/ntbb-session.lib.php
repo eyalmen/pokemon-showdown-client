@@ -285,16 +285,37 @@ class NTBBSession {
 		$this->scookie = $name . ',' . $this->session . ',' . $this->sid;
 
 		$curuser = $user;
+		$curuser['logintime'] = $ctime;
 		$curuser['loggedin'] = true;
+		$curuser['loginip'] = $this->getIp();
 		// unset these values to avoid them being leaked accidentally
 		$curuser['outdatedpassword'] = !!$curuser['password'];
 		unset($curuser['password']);
 		unset($curuser['nonce']);
 		unset($curuser['passwordhash']);
+		
+		// set curuser to a new object with values userid, usernum, username, email, registertime, group, banstate, ip, avatar, account, logintime, loginip, loggedin, outdatedpassword
+		$curuser = [
+			'userid' => $curuser['userid'],
+			'usernum' => $curuser['usernum'],
+			'username' => $curuser['username'],
+			'email' => $curuser['email'],
+			'registertime' => $curuser['registertime'],
+			'group' => $curuser['group'],
+			'banstate' => $curuser['banstate'],
+			'ip' => $curuser['ip'],
+			'avatar' => $curuser['avatar'],
+			'account' => $curuser['account'],
+			'logintime' => $curuser['logintime'],
+			'loginip' => $curuser['loginip'],
+			'loggedin' => $curuser['loggedin'],
+			'outdatedpassword' => $curuser['outdatedpassword'],
+		];
 
-		// setcookie('sid', $this->scookie, ['expires' => time() + (363)*24*60*60, 'path' => '/', 'domain' => $psconfig['routes']['root'], 'secure' => true, 'httponly' => true, 'samesite' => 'None']);
+		$setcookie = setcookie('sid', $this->scookie, $ctime + (363)*24*60*60, '/','', true, true);
+		// setcookie('sid', $this->scookie, ['expires' => time() + (363)*24*60*60, 'path' => '/', 'domain' => play.pseudo.gq, 'secure' => true, 'httponly' => true, 'samesite' => 'None']);
 		$encodedcookie = rawurlencode($this->scookie);
-		header("Set-Cookie: sid=$encodedcookie; Max-Age=31363200; Domain={$psconfig['routes']['root']}; Path=/; Secure; SameSite=None");
+		// header("Set-Cookie: sid=$encodedcookie; Max-Age=31363200; Domain={play.pseudo.gq}; Path=/; Secure; SameSite=None");
 
 		return $curuser;
 	}
@@ -304,21 +325,24 @@ class NTBBSession {
 		if (!$this->sid) {
 			$this->sid = $this->mksid($this->sid);
 			$this->scookie = ',,' . $this->sid;
-			// setcookie('sid', $this->scookie, ['expires' => time() + (363)*24*60*60, 'path' => '/', 'domain' => $psconfig['routes']['root'], 'secure' => true, 'httponly' => true, 'samesite' => 'None']);
+			$setcookie = setcookie('sid', $this->scookie, $ctime + (363)*24*60*60, '/','', true, true);
+			// setcookie('sid', $this->scookie, ['expires' => time() + (363)*24*60*60, 'path' => '/', 'domain' => play.pseudo.gq, 'secure' => true, 'httponly' => true, 'samesite' => 'None']);
 			$encodedcookie = rawurlencode($this->scookie);
-			header("Set-Cookie: sid=$encodedcookie; Max-Age=31363200; Domain={$psconfig['routes']['root']}; Path=/; Secure; SameSite=None");
+			// header("Set-Cookie: sid=$encodedcookie; Max-Age=31363200; Domain={play.pseudo.gq}; Path=/; Secure; SameSite=None");
 		}
 	}
 	function killCookie() {
 		global $psconfig;
 		if ($this->sid) {
 			$this->scookie = ',,' . $this->sid;
-			// setcookie('sid', $this->scookie, ['expires' => time() + (363)*24*60*60, 'path' => '/', 'domain' => $psconfig['routes']['root'], 'secure' => true, 'httponly' => true, 'samesite' => 'None']);
+
+			// setcookie('sid', $this->scookie, ['expires' => time() + (363)*24*60*60, 'path' => '/', 'domain' => play.pseudo.gq, 'secure' => true, 'httponly' => true, 'samesite' => 'None']);
 			$encodedcookie = rawurlencode($this->scookie);
-			header("Set-Cookie: sid=$encodedcookie; Max-Age=31363200; Domain={$psconfig['routes']['root']}; Path=/; Secure; SameSite=None");
+			// header("Set-Cookie: sid=$encodedcookie; Max-Age=31363200; Domain={play.pseudo.gq}; Path=/; Secure; SameSite=None");
 		} else {
-			// setcookie('sid', '', ['expires' => time() - 60*60*24*2, 'path' => '/', 'domain' => $psconfig['routes']['root'], 'secure' => true, 'httponly' => true, 'samesite' => 'None']);
-			header("Set-Cookie: sid=; Max-Age=0; Domain={$psconfig['routes']['root']}; Path=/; Secure; SameSite=None");
+			$setcookie = setcookie('sid', '', $ctime - 60*60*24*2, '/','', true, true);
+			// setcookie('sid', '', ['expires' => time() - 60*60*24*2, 'path' => '/', 'domain' => play.pseudo.gq, 'secure' => true, 'httponly' => true, 'samesite' => 'None']);
+			// header("Set-Cookie: sid=; Max-Age=0; Domain={play.pseudo.gq}; Path=/; Secure; SameSite=None");
 		}
 	}
 
@@ -459,6 +483,8 @@ class NTBBSession {
 		} else if (!$this->isUseridAllowed($userid)) {
 			return ';;Your username contains disallowed text.';
 		}
+
+		$serverhostname = "pseudos";
 
 		$data = '';
 		if (!$user) {
