@@ -229,6 +229,9 @@
 			// very hardcode
 			var tierTable = {
 				uber: "Uber",
+				pseudo: "Pseudo",
+				oud: "OUD",
+				uud: "UUD",
 				ou: "OU",
 				uu: "UU",
 				ru: "RU",
@@ -243,7 +246,8 @@
 				uubl: "UUBL",
 				rubl: "RUBL",
 				nubl: "NUBL",
-				publ: "PUBL"
+				publ: "PUBL",
+				donotuse: "Do Not Use",
 			};
 			var tier = {name: tierTable[id]};
 			return this.renderTierRow(tier, matchStart, matchLength, errorMessage);
@@ -759,6 +763,7 @@
 		var buf = '<li class="result"><a' + attrs + ' data-entry="tier|' + BattleLog.escapeHTML(tier.name) + '">';
 
 		// name
+		console.log("render: " + JSON.stringify(tier) + ' \n ' + matchStart + ' \n ' + matchLength + ' \n ' + errorMessage);
 		var name = tier.name;
 		if (matchLength) {
 			name = name.substr(0, matchStart) + '<b>' + name.substr(matchStart, matchLength) + '</b>' + name.substr(matchStart + matchLength);

@@ -22,8 +22,8 @@ function ThemeHeaderTemplate() {
 
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=IE8" />
 	<link rel="stylesheet" href="//<?= $psconfig['routes']['client']; ?>/style/font-awesome.css" />
-	<link rel="stylesheet" href="/theme/panels.css?" />
-	<link rel="stylesheet" href="/theme/main.css?" />
+	<link rel="stylesheet" href="https://replay.pokemonshowdown.com/theme/panels.css?" />
+	<link rel="stylesheet" href="https://replay.pokemonshowdown.com/theme/main.css?" />
 
 	<!-- Workarounds for IE bugs to display trees correctly. -->
 	<!--[if lte IE 6]><style> li.tree { height: 1px; } </style><![endif]-->
@@ -49,7 +49,7 @@ ga('send', 'pageview');
 	<div class="pfx-topbar">
 		<div class="header">
 			<ul class="nav">
-				<li><a class="button nav-first<?php if ($panels->tab === 'home') echo ' cur'; ?>" href="/"><img src="/images/pokemonshowdownbeta.png" alt="Pok&eacute;mon Showdown! (beta)" /> Home</a></li>
+				<li><a class="button nav-first<?php if ($panels->tab === 'home') echo ' cur'; ?>" href="/"><img src="https://pokemonshowdown.com/images/pokemonshowdownbeta.png" alt="Pok&eacute;mon Showdown! (beta)" /> Home</a></li>
 				<li><a class="button" href="//<?= $psconfig['routes']['dex'] ?>/">Pok&eacute;dex</a></li>
 				<li><a class="button" href="//<?= $psconfig['routes']['replays'] ?>/">Replays</a></li>
 				<li><a class="button<?php if ($panels->tab === 'ladder') echo ' cur'; ?>" href="/ladder/">Ladder</a></li>
