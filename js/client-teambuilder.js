@@ -27,8 +27,12 @@
 				if (this.curTeam.format.includes('bdsp')) {
 					this.curTeam.dex = Dex.mod('gen8bdsp');
 				}
-				if (this.curTeam.format.includes('oud') || this.curTeam.format.includes('uud') || this.curTeam.format.includes('donotuse')) {
+				if (this.curTeam.format.includes('oud') || this.curTeam.format.includes('donotuse')) {
 					this.curTeam.dex = Dex.mod('gen9deluxe');
+				}
+				if (this.curTeam.format.includes('uud')) {
+					console.log("34 UUD")
+					this.curTeam.dex = Dex.mod('gen9regionaldeluxe');
 				}
 				Storage.activeSetList = this.curSetList;
 			}
@@ -697,8 +701,12 @@
 			if (this.curTeam.format.includes('bdsp')) {
 				this.curTeam.dex = Dex.mod('gen8bdsp');
 			}
-			if (this.curTeam.format.includes('oud') || this.curTeam.format.includes('uud') || this.curTeam.format.includes('donotuse')) {
+			if (this.curTeam.format.includes('oud') || this.curTeam.format.includes('donotuse')) {
 				this.curTeam.dex = Dex.mod('gen9deluxe');
+			}
+			if (this.curTeam.format.includes('uud')) {
+				console.log("708 UUD")
+				this.curTeam.dex = Dex.mod('gen9regionaldeluxe');
 			}
 			Storage.activeSetList = this.curSetList = Storage.unpackTeam(this.curTeam.team);
 			this.curTeamIndex = i;
@@ -1490,9 +1498,14 @@
 			if (this.curTeam.format.includes('bdsp')) {
 				this.curTeam.dex = Dex.mod('gen8bdsp');
 			}
-			if (this.curTeam.format.includes('oud') || this.curTeam.format.includes('uud') || this.curTeam.format.includes('donotuse')) {
-				console.log("switched mod: " + JSON.stringify(Dex.mod('gen9deluxe')))
+			console.log(this.curTeam.format);
+			if (this.curTeam.format.includes('oud') || this.curTeam.format.includes('donotuse')) {
 				this.curTeam.dex = Dex.mod('gen9deluxe');
+			}
+			if (this.curTeam.format.includes("uud")) {
+				console.log("1506 UUD")
+				this.curTeam.dex = Dex.mod('gen9regionaldeluxe');
+				console.log(JSON.stringify(this.curTeam.dex.species));
 			}
 			this.save();
 			if (this.curTeam.gen === 5 && !Dex.loadedSpriteData['bw']) Dex.loadSpriteData('bw');
@@ -3021,7 +3034,8 @@
 				if (baseFormat.substr(0, 3) === 'gen') baseFormat = baseFormat.substr(4);
 				if (baseFormat.substr(0, 4) === 'bdsp') baseFormat = baseFormat.substr(4);
 				if (baseFormat.substr(0, 8) === 'pokebank') baseFormat = baseFormat.substr(8);
-				if (baseFormat.substr(0, 7) === 'deluxe') baseFormat = baseFormat.substr(6);
+				if (baseFormat.substr(0, 6) === 'deluxe') baseFormat = baseFormat.substr(6);
+				if (baseFormat.substr(0, 14) === 'regionaldeluxe') baseFormat = baseFormat.substr(14);
 				if (this.curTeam && this.curTeam.format) {
 					if (baseFormat === 'battlespotsingles' || baseFormat === 'battlespotdoubles' || baseFormat.substr(0, 3) === 'vgc' ||
 						baseFormat === 'battlefestivaldoubles') {
@@ -3053,7 +3067,8 @@
 				if (baseFormat.substr(0, 3) === 'gen') baseFormat = baseFormat.substr(4);
 				if (baseFormat.substr(0, 4) === 'bdsp') baseFormat = baseFormat.substr(4);
 				if (baseFormat.substr(0, 8) === 'pokebank') baseFormat = baseFormat.substr(8);
-				if (baseFormat.substr(0, 7) === 'deluxe') baseFormat = baseFormat.substr(6);
+				if (baseFormat.substr(0, 6) === 'deluxe') baseFormat = baseFormat.substr(6);
+				if (baseFormat.substr(0, 14) === 'regionaldeluxe') baseFormat = baseFormat.substr(14);
 				if (this.curTeam && this.curTeam.format) {
 					if (baseFormat === 'battlespotsingles' || baseFormat === 'battlespotdoubles' || baseFormat.substr(0, 3) === 'vgc' ||
 						baseFormat === 'battlefestivaldoubles') {
@@ -3268,7 +3283,8 @@
 				if (baseFormat.substr(0, 3) === 'gen') baseFormat = baseFormat.substr(4);
 				if (baseFormat.substr(0, 4) === 'bdsp') baseFormat = baseFormat.substr(4);
 				if (baseFormat.substr(0, 8) === 'pokebank') baseFormat = baseFormat.substr(8);
-				if (baseFormat.substr(0, 7) === 'deluxe') baseFormat = baseFormat.substr(6);
+				if (baseFormat.substr(0, 6) === 'deluxe') baseFormat = baseFormat.substr(6);
+				if (baseFormat.substr(0, 14) === 'regionaldeluxe') baseFormat = baseFormat.substr(14);
 				if (this.curTeam && this.curTeam.format) {
 					if (baseFormat.substr(0, 10) === 'battlespot' && baseFormat.substr(0, 19) !== 'battlespotspecial13' ||
 						baseFormat.substr(0, 3) === 'vgc' || baseFormat.substr(0, 14) === 'battlefestival') set.level = 50;
