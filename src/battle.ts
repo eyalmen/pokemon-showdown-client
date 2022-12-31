@@ -1880,6 +1880,10 @@ export class Battle {
 		case '-copyboost': {
 			let poke = this.getPokemon(args[1])!;
 			let frompoke = this.getPokemon(args[2])!;
+			if (!kwArgs.silent && kwArgs.from) {
+				let effect = Dex.getEffect(kwArgs.from);
+				this.activateAbility(poke, effect);
+			}
 			let stats = args[3] ? args[3].split(', ') : ['atk', 'def', 'spa', 'spd', 'spe', 'accuracy', 'evasion'];
 			for (const stat of stats) {
 				poke.boosts[stat] = frompoke.boosts[stat];
@@ -2472,6 +2476,8 @@ export class Battle {
 			let poke = this.getPokemon(args[1])!;
 			let type = Dex.types.get(args[2]).name;
 			poke.terastallized = type;
+			poke.details += `, tera:${type}`;
+			poke.searchid += `, tera:${type}`;
 			this.scene.animTransform(poke, true, true);
 			this.log(args, kwArgs);
 			break;
