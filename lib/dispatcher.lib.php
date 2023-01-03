@@ -209,8 +209,8 @@ class DefaultActionHandler {
 			$out['actionerror'] = 'Please answer the anti-spam question given.';
 		} else if (($registrationcount = $users->getRecentRegistrationCount()) === false) {
 			$out['actionerror'] = 'A database error occurred. Please try again.';
-		} else if ($registrationcount >= 2) {
-			$out['actionerror'] = 'You can\'t register more than two usernames every two hours. Try again later.';
+		// } else if ($registrationcount >= 2) {
+		// 	$out['actionerror'] = 'You can\'t register more than two usernames every two hours. Try again later.';
 		} else if ($user = $users->addUser($user, $_POST['password'])) {
 			$challengekeyid = !isset($reqData['challengekeyid']) ? -1 : intval($reqData['challengekeyid']);
 			$challenge = !isset($reqData['challenge']) ? '' : $reqData['challenge'];
@@ -244,6 +244,23 @@ class DefaultActionHandler {
 			$out['actionerror'] = 'Your new password must be at least 5 characters long.';
 		} else if (!$users->modifyUser($curuser['userid'], array(
 				'password' => $reqData['password']))) {
+			$out['actionerror'] = 'A database error occurred. Please try again.';
+		} else {
+			$out['actionsuccess'] = true;
+		}
+	}
+
+	public function changepronouns($dispatcher, &$reqData, &$out) {
+		// needs a username, password, and new pronouns
+		global $users, $curuser;
+
+		if (!$_POST ||
+				!isset($reqData['pronouns'])) {
+			$out['actionerror'] = 'Invalid request.';
+		} else if (!$curuser['loggedin']) {
+			$out['actionerror'] = 'Your session has expired. Please log in again.';
+		} else if (!$users->modifyUser($curuser['userid'], array(
+				'pronouns' => $reqData['pronouns']))) {
 			$out['actionerror'] = 'A database error occurred. Please try again.';
 		} else {
 			$out['actionsuccess'] = true;

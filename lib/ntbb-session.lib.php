@@ -635,6 +635,13 @@ class NTBBSession {
 				$this->login($userid, $changes['password']);
 			}
 		}
+		if (!empty($changes['pronouns'])) {
+			$pronouns = $changes['pronouns'];
+			$psdb->query("UPDATE `{$psdb->prefix}users` SET `pronouns` = ? WHERE `userid` = ?", [$pronouns, $user['userid']]);
+			if ($psdb->error()) {
+				return false;
+			}
+		}
 		if (!empty($changes['group'])) {
 			$group = intval($changes['group']);
 			$psdb->query("UPDATE `{$psdb->prefix}users` SET `group` = $group WHERE `userid` = ?", [$user['userid']]);

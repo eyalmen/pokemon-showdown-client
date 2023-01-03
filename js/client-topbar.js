@@ -483,6 +483,7 @@
 				var registered = app.user.get('registered');
 				if (registered && (registered.userid === app.user.get('userid'))) {
 					buf += '<p><button name="changepassword">Password change</button></p>';
+					buf += '<p><button name="changepronouns">Change pronouns</button></p>';
 				} else {
 					buf += '<p><button name="register">Register</button></p>';
 				}
@@ -673,6 +674,9 @@
 		},
 		changepassword: function () {
 			app.addPopup(ChangePasswordPopup);
+		},
+		changepronouns: function () {
+			app.addPopup(ChangePronounsPopup);
 		},
 		logout: function () {
 			app.user.logout();
@@ -977,6 +981,36 @@
 					app.addPopupMessage("Your password was successfully changed.");
 				} else {
 					app.addPopup(ChangePasswordPopup, {
+						error: data.actionerror
+					});
+				}
+			}), 'text');
+		}
+	});
+
+	var ChangePronounsPopup = this.ChangePronounsPopup = Popup.extend({
+		type: 'semimodal',
+		initialize: function (data) {
+			var buf = '<form>';
+			if (data.error) {
+				buf += '<p class="error">' + data.error + '</p>';
+			} else {
+				buf += '<p>Change your listed pronouns:</p>';
+			}
+			buf += '<p><label class="label">Pronouns: <input class="textbox autofocus" type="text" name="pronouns" value="' + BattleLog.escapeHTML(app.user.get('pronouns')) + '" /></label></p>';
+			buf += '<p class="buttonbar"><button type="submit"><strong>Change pronouns</strong></button> <button type="button" name="close">Cancel</button></p></form>';
+			this.$el.html(buf);
+		},
+		submit: function (data) {
+			$.post(app.user.getActionPHP(), {
+				act: 'changepronouns',
+				pronouns: data.pronouns
+			}, Storage.safeJSON(function (data) {
+				if (!data) data = {};
+				if (data.actionsuccess) {
+					app.addPopupMessage("Your pronouns were successfully changed.");
+				} else {
+					app.addPopup(ChangePronounsPopup, {
 						error: data.actionerror
 					});
 				}
