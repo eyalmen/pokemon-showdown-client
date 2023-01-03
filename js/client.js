@@ -2615,6 +2615,18 @@ function toId() {
 			data.name = name;
 			app.on('response:userdetails', this.update, this);
 			app.send('/cmd userdetails ' + data.userid);
+
+			data.pronouns = JSON.parse(
+				$.ajax({
+					url: 'https://play.pseudo.gq/action.php',
+					type: 'POST', 
+					data: { 
+						act: 'getpronouns', 
+						username: data.userid
+					}, 
+					async: false 
+				}).responseText.replace("]", "")).pronouns;
+
 			this.update();
 		},
 		events: {
@@ -2633,6 +2645,7 @@ function toId() {
 			}
 			var userid = data.userid;
 			var name = data.name;
+			var pronouns = data.pronouns;
 			var avatar = data.avatar || '';
 			var groupName = ((Config.groups[data.roomGroup] || {}).name || '');
 			var globalGroup = (Config.groups[data.group || Config.defaultGroup || ' '] || null);
@@ -2647,17 +2660,6 @@ function toId() {
 				}
 			}
 			var ownUserid = app.user.get('userid');
-
-			var pronouns = JSON.parse(
-				$.ajax({
-					url: 'https://play.pseudo.gq/action.php',
-					type: 'POST', 
-					data: { 
-						act: 'getpronouns', 
-						username: userid
-					}, 
-					async: false 
-				}).responseText.replace("]", "")).pronouns;
 
 			var buf = '<div class="userdetails">';
 			if (avatar) buf += '<img class="trainersprite' + (userid === ownUserid ? ' yours' : '') + '" src="' + Dex.resolveAvatar(avatar) + '" />';

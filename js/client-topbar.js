@@ -995,7 +995,7 @@
 			if (data.error) {
 				buf += '<p class="error">' + data.error + '</p>';
 			} else {
-				buf += '<p>Change your listed pronouns:</p>';
+				buf += '<p>Change your listed pronouns:<br>(do not abuse this)</p>';
 			}
 			buf += '<p><label class="label">Pronouns: <input class="textbox autofocus" type="text" name="pronouns" value="' + BattleLog.escapeHTML(app.user.get('pronouns')) + '" /></label></p>';
 			buf += '<p class="buttonbar"><button type="submit"><strong>Change pronouns</strong></button> <button type="button" name="close">Cancel</button></p></form>';
@@ -1030,6 +1030,7 @@
 				buf += '<p>Register your account:</p>';
 			}
 			buf += '<p><label class="label">Username: <strong><input type="text" name="name" value="' + BattleLog.escapeHTML(data.name || app.user.get('name')) + '" style="color:inherit;background:transparent;border:0;font:inherit;font-size:inherit;display:block" readonly autocomplete="username" /></strong></label></p>';
+			buf += '<p><label class="label">Pronouns (optional, don\'t abuse this): <input class="textbox" type="text" name="pronouns" value="' + BattleLog.escapeHTML(data.pronouns || app.user.get('pronouns')) + '" /></label></p>';
 			buf += '<p><label class="label">Password: <input class="textbox autofocus" type="password" name="password" autocomplete="new-password" /></label></p>';
 			buf += '<p><label class="label">Password (confirm): <input class="textbox" type="password" name="cpassword" autocomplete="new-password" /></label></p>';
 			buf += '<p><label class="label"><img src="' + Dex.resourcePrefix + 'sprites/gen5ani/pikachu.gif" alt="An Electric-type mouse that is the mascot of the Pok\u00E9mon franchise." /></label></p>';
@@ -1040,11 +1041,17 @@
 		submit: function (data) {
 			var name = data.name;
 			var captcha = data.captcha;
+
+			if (data.pronouns === '') {
+				data.pronouns = 'unset';
+			}
+
 			$.post(app.user.getActionPHP(), {
 				act: 'register',
 				username: name,
 				password: data.password,
 				cpassword: data.cpassword,
+				pronouns: data.pronouns,
 				captcha: captcha,
 				challstr: app.user.challstr
 			}, Storage.safeJSON(function (data) {
