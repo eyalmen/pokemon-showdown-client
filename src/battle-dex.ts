@@ -220,7 +220,20 @@ const Dex = new class implements ModdedDex {
 			return protocol + '://' + Config.server.host + ':' + Config.server.port +
 				'/avatars/' + encodeURIComponent(avatar).replace(/\%3F/g, '?');
 		}
-		return Dex.resourcePrefix + 'sprites/trainers/' + Dex.sanitizeName(avatar || 'unknown') + '.png';
+		var url =  Dex.resourcePrefix + 'sprites/trainers/' + Dex.sanitizeName(avatar || 'unknown') + '.png';
+
+		var cavatars = {
+			"sylveon": "gif",
+			"azumarill": "gif",
+			"crobat": "gif",
+			"wailord": "gif",
+		}
+
+		if (cavatars[avatar]) {
+			url = Dex.resourcePrefix + 'sprites/trainers/' + Dex.sanitizeName(avatar || 'unknown') + '.' + cavatars[avatar];
+		}
+
+		return url;
 	}
 
 	/**

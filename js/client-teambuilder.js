@@ -1819,15 +1819,18 @@
 			this.$el.html('<div class="teamwrapper">' + buf + '</div>');
 			if ($(window).width() < 640) this.show();
 			this.$chart = this.$('.teambuilder-results');
-			this.search = new BattleSearch(this.$chart, this.$chart);
-			var self = this;
-			// fun fact: Backbone DOM events don't support scroll...
-			// I guess scroll doesn't bubble like other events
-			this.$chart.on('scroll', function () {
-				if (self.curChartType in self.searchChartTypes) {
-					self.search.updateScroll();
-				}
-			});
+			if (BattleSearch !== undefined) {
+				this.search = new BattleSearch(this.$chart, this.$chart);
+
+				var self = this;
+				// fun fact: Backbone DOM events don't support scroll...
+				// I guess scroll doesn't bubble like other events
+				this.$chart.on('scroll', function () {
+					if (self.curChartType in self.searchChartTypes) {
+						self.search.updateScroll();
+					}
+				});
+			}
 		},
 		updateSetTop: function () {
 			this.$('.teambar').html(this.renderTeambar());

@@ -192,6 +192,7 @@ class DefaultActionHandler {
 		$serverhostname = '' . $dispatcher->getServerHostName(@$reqData['serverid']);
 		$user = [
 			'username' => @$_POST['username'],
+			'pronouns' => @$reqData['pronouns'] != NULL ? @$reqData['pronouns'] : 'unset',
 		];
 		$userid = $users->userid($user['username']);
 		if ((mb_strlen($userid) < 1) || ctype_digit($userid)) {

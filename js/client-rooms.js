@@ -28,7 +28,8 @@
 			this.chatroomInterval = setInterval(function () {
 				if (app.curSideRoom && app.curSideRoom.id === 'rooms') {
 					app.send('/cmd rooms');
-					this.update();
+					// only run this.update() if it is a function
+					if (typeof this.update === 'function') this.update();
 				}
 			}, 20000);
 		},

@@ -695,6 +695,11 @@ class NTBBSession {
 		$user['userid'] = $this->userid($user['username']);
 		$user['passwordhash'] = $this->passwordHash($password);
 
+
+		if (!isset($user['pronouns'])) {
+			$user['pronouns'] = "unset";
+		}
+
 		if (!$this->isUseridAllowed($user['userid'])) {
 			return false;
 		}
@@ -705,8 +710,8 @@ class NTBBSession {
 		}
 
 		$psdb->query(
-			"INSERT INTO `{$psdb->prefix}users` (`userid`,`username`,`passwordhash`,`email`,`registertime`,`ip`) VALUES (?, ?, ?, ?, ?, ?)",
-			[$user['userid'], $user['username'], $user['passwordhash'], @$user['email'], $ctime, $this->getIp()]
+			"INSERT INTO `{$psdb->prefix}users` (`userid`,`username`,`passwordhash`,`email`,`registertime`,`ip`, `pronouns`) VALUES (?, ?, ?, ?, ?, ?, ?)",
+			[$user['userid'], $user['username'], $user['passwordhash'], @$user['email'], $ctime, $this->getIp(), $user['pronouns']]
 		);
 		if ($psdb->error()) {
 			return false;
