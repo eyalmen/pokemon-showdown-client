@@ -675,6 +675,18 @@ class NTBBSession {
 		return true;
 	}
 
+	function getpronouns($userid) {
+		global $psdb;
+
+		$res = $psdb->query("SELECT `pronouns` FROM `{$psdb->prefix}users` WHERE `userid` = ? LIMIT 1", [$userid]);
+		if (!$res) // query failed for weird reason
+			return false;
+		$user = $psdb->fetch_assoc($res);
+		// if (!$user['userid']) return false;
+
+		return $user['pronouns'];
+	}
+
 	function getRecentRegistrationCount($ip = '', $timeperiod = 7200 /* 2 hours */) {
 		global $psdb;
 		if ($ip === '') {

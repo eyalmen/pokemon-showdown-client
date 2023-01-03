@@ -251,7 +251,6 @@ class DefaultActionHandler {
 	}
 
 	public function changepronouns($dispatcher, &$reqData, &$out) {
-		// needs a username, password, and new pronouns
 		global $users, $curuser;
 
 		if (!$_POST ||
@@ -263,6 +262,17 @@ class DefaultActionHandler {
 				'pronouns' => $reqData['pronouns']))) {
 			$out['actionerror'] = 'A database error occurred. Please try again.';
 		} else {
+			$out['actionsuccess'] = true;
+		}
+	}
+
+	public function getpronouns($dispatcher, &$reqData, &$out) {
+		global $users, $curuser;
+		// this only needs the username
+		if (!isset($reqData['username'])) {
+			$out['actionerror'] = 'Invalid request.';
+		} else {
+			$out['pronouns'] = $users->getPronouns($reqData['username']);
 			$out['actionsuccess'] = true;
 		}
 	}

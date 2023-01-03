@@ -1892,6 +1892,7 @@
 		},
 		constructItem: function (userid) {
 			var user = this.room.users[userid];
+
 			var text = '';
 			// Sanitising the `userid` here is probably unnecessary, because
 			// IDs can't contain anything dangerous.

@@ -2648,9 +2648,21 @@ function toId() {
 			}
 			var ownUserid = app.user.get('userid');
 
+			var pronouns = JSON.parse(
+				$.ajax({
+					url: 'https://play.pseudo.gq/action.php',
+					type: 'POST', 
+					data: { 
+						act: 'getpronouns', 
+						username: userid
+					}, 
+					async: false 
+				}).responseText.replace("]", "")).pronouns;
+
 			var buf = '<div class="userdetails">';
 			if (avatar) buf += '<img class="trainersprite' + (userid === ownUserid ? ' yours' : '') + '" src="' + Dex.resolveAvatar(avatar) + '" />';
 			buf += '<strong><a href="//' + Config.routes.users + '/' + userid + '" target="_blank">' + BattleLog.escapeHTML(name) + '</a></strong><br />';
+			if (pronouns && pronouns != "unset") buf += '<small class="usergroup">' + pronouns + '</small><br />';
 			var offline = data.rooms === false;
 			if (data.status || offline) {
 				var status = offline ? '(Offline)' : data.status.startsWith('!') ? data.status.slice(1) : data.status;
