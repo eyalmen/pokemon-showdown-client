@@ -27,11 +27,10 @@
 				if (this.curTeam.format.includes('bdsp')) {
 					this.curTeam.dex = Dex.mod('gen8bdsp');
 				}
-				if (this.curTeam.format.includes('oud') || this.curTeam.format.includes('donotuse')) {
+				if (this.curTeam.format.includes('oud') || this.curTeam.format.includes('donotuse') || this.curTeam.format.includes('dnu')) {
 					this.curTeam.dex = Dex.mod('gen9deluxe');
 				}
 				if (this.curTeam.format.includes('uud')) {
-					console.log("34 UUD")
 					this.curTeam.dex = Dex.mod('gen9regionaldeluxe');
 				}
 				Storage.activeSetList = this.curSetList;
@@ -701,7 +700,7 @@
 			if (this.curTeam.format.includes('bdsp')) {
 				this.curTeam.dex = Dex.mod('gen8bdsp');
 			}
-			if (this.curTeam.format.includes('oud') || this.curTeam.format.includes('donotuse')) {
+			if (this.curTeam.format.includes('oud') || this.curTeam.format.includes('donotuse') || this.curTeam.format.includes('dnu')) {
 				this.curTeam.dex = Dex.mod('gen9deluxe');
 			}
 			if (this.curTeam.format.includes('uud')) {
@@ -1505,8 +1504,7 @@
 			if (this.curTeam.format.includes('bdsp')) {
 				this.curTeam.dex = Dex.mod('gen8bdsp');
 			}
-			console.log(this.curTeam.format);
-			if (this.curTeam.format.includes('oud') || this.curTeam.format.includes('donotuse')) {
+			if (this.curTeam.format.includes('oud') || this.curTeam.format.includes('donotuse') || this.curTeam.format.includes('dnu')) {
 				this.curTeam.dex = Dex.mod('gen9deluxe');
 			}
 			if (this.curTeam.format.includes("uud")) {

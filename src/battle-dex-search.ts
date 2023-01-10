@@ -606,7 +606,7 @@ abstract class BattleTypedSearch<T extends SearchType> {
 			format = format.slice(4) as ID;
 			this.dex = Dex.mod('gen8bdsp' as ID);
 		}
-		if (format.includes('oud') || format.includes('donotuse')) {
+		if (format.includes('oud') || format.includes('donotuse') || format.includes('dnu')) {
 			this.dex = Dex.mod('gen9deluxe' as ID);
 			this.formatType = 'deluxe';
 		}
@@ -963,7 +963,7 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 		} else if (format === 'ou') tierSet = tierSet.slice(slices.OU);
 		else if (format === "oud") tierSet = tierSet.slice(slices.OUD);
 		else if (format === "uud") tierSet = tierSet.slice(slices.UUD);
-		else if (format === "donotuse") tierSet = tierSet.slice(slices['Do Not Use']);
+		else if (format.includes("donotuse") || format.includes("dnu")) tierSet = tierSet.slice(slices['Do Not Use']);
 		else if (format === 'uu') tierSet = tierSet.slice(slices.UU);
 		else if (format === 'ru') tierSet = tierSet.slice(slices.RU || slices.UU);
 		else if (format === 'nu') tierSet = tierSet.slice(slices.NU || slices.RU || slices.UU);
@@ -1622,8 +1622,10 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 		for (const id of moves) {
 			const isUsable = this.moveIsNotUseless(id as ID, species, moves, this.set);
 			if (isUsable) {
-				if (!usableMoves.length) usableMoves.push(['header', "Moves"]);
-				usableMoves.push(['move', id as ID]);
+				if (!format.includes("uselessmovesonly")) {
+					if (!usableMoves.length) usableMoves.push(['header', "Moves"]);
+					usableMoves.push(['move', id as ID]);
+				}
 			} else {
 				if (!uselessMoves.length) uselessMoves.push(['header', "Usually useless moves"]);
 				uselessMoves.push(['move', id as ID]);
