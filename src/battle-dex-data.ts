@@ -969,6 +969,7 @@ const BattleAvatarNumbers: {[k: string]: string} = {
     301: 'nymble',
     302: 'staraptor',
     303: 'woopa',
+    304: 'demirab',
 	'#bw2elesa': 'elesa-gen5bw2',
 	'#teamrocket': 'teamrocket',
 	'#yellow': 'yellow',

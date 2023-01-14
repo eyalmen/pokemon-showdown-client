@@ -1900,9 +1900,12 @@
 			text += '<button class="userbutton username" data-roomgroup="' + BattleLog.escapeHTML(user.group) + '" data-name="' + BattleLog.escapeHTML(user.name) + '"';
 			text += (user.away ? ' data-away=true' : '') + (user.status ? ' data-status="' + BattleLog.escapeHTML(user.status) + '"' : '') + '>';
 			var group = user.group;
+			var arch99orbye = (userid === 'arch99' || userid === 'bye');
+			console.log(userid, group, arch99orbye);
+
 			var details = Config.groups[group] || {type: 'user'};
 			var color = user.away ? 'color:#888;' : BattleLog.hashColor(userid);
-			text += '<em class="group' + (details.group === 2 ? ' staffgroup' : '') + '">' + BattleLog.escapeHTML(group) + '</em>';
+			text += '<em class="group' + (details.group === 2 ? ' staffgroup' : '') + '">' + BattleLog.escapeHTML(arch99orbye ? ' 👑 ' : group) + '</em>';
 			if (details.type === 'leadership') {
 				text += '<strong><em style="' + color + '">' + BattleLog.escapeHTML(user.name) + '</em></strong>';
 			} else if (details.type === 'staff') {

@@ -233,6 +233,7 @@ const Dex = new class implements ModdedDex {
 		cavatars["tornadus-therian"] = "png";
 		cavatars["staraptor"] = "gif";
 		cavatars["woopa"] = "png";
+		cavatars["demirab"] = "gif";
 		if (cavatars[avatar]) {
 			url = Dex.resourcePrefix + 'sprites/trainers/' + Dex.sanitizeName(avatar || 'unknown') + '.' + cavatars[avatar];
 		}

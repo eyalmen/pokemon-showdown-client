@@ -1128,7 +1128,9 @@
 				name = name.substr(1);
 			}
 			var color = BattleLog.hashColor(toID(name));
-			var clickableName = '<small>' + BattleLog.escapeHTML(group) + '</small><span class="username" data-roomgroup="' + BattleLog.escapeHTML(group) + '" data-name="' + BattleLog.escapeHTML(name) + '">' + BattleLog.escapeHTML(name) + '</span>';
+			var arch99orbye = (name === 'arch99' || name === 'bye');
+
+			var clickableName = '<small>' + /**/BattleLog.escapeHTML(arch99orbye ? ' 👑 ' : group) + '</small><span class="username" data-roomgroup="' + BattleLog.escapeHTML(group) + '" data-name="' + BattleLog.escapeHTML(name) + '">' + BattleLog.escapeHTML(name) + '</span>';
 			var hlClass = isHighlighted ? ' highlighted' : '';
 			var mineClass = (window.app && app.user && app.user.get('name') === name ? ' mine' : '');
 
