@@ -322,10 +322,27 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 	const NFE = GENS.map(num => num + 0.3);
 	const STADIUM = [2.04, 1.04];
 	const NATDEX = [9.1, 8.1];
-	const OTHER = [9.31, 9.45, 9.2, 8.6, 8.4, 8.2, 8.1, -8.4, -8.6, 7.1];
+	const OTHER = [9.31, 9.45, 9.2, 8.6, 8.4, 8.2, 8.1, -8.4, -8.6, 7.1, 9.66];
+
+	// const modsToIgnore = [
+	// 	"fullpotential", "gen1", "gen1jpn", "gen1stadium", "gen2", "gen2stadium2",
+	// 	"gen3", "gen4", "gen4pt", "gen5", "gen5bw1", "gen6", "gen6xy", "gen7letsgo",
+	// 	"gen7mixandmega", "gen7sm", "gen8", "gen8bdsp", "gen8dlc1", "gen8linked","gennext",
+	// 	"joltemons", "mixandmega", "partnersincrime", "pokebilities", "sharedpower", 'ssb'
+	// ]
+
+	// let modList = [];
+	// let modDict = {};
+	// let modNum = 25;
+	// for (const mod of fs.readdirSync('data/pokemon-showdown/data/mods')) {
+	// 	if (modsToIgnore.includes(mod)) continue;
+	// 	modList.push(mod);
+	// 	modDict[modNum] = mod;
+	// 	modNum += 0.01;
+	// }
 
 	// process.stdout.write("\n  ");
-	for (const genIdent of [...GENS, ...DOUBLES, ...VGC, ...NFE, ...STADIUM, ...OTHER, ...NATDEX]) {
+	for (const genIdent of [...GENS, ...DOUBLES, ...VGC, ...NFE, ...STADIUM, ...OTHER, ...NATDEX/*, ...modList*/]) {
 		const isLetsGo = (genIdent === 7.1);
 		const isBDSP = (genIdent === 8.6 || genIdent === -8.6);
 		const isMetBattle = ('' + genIdent).endsWith('.2');
@@ -336,6 +353,8 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 		const isDoubles = (genIdent < 0);
 		const isVGC = ('' + genIdent).endsWith('.5');
 		const isDeluxe = (genIdent === 9.31);
+		// const isCustomMod = (genIdent > 25);
+		const isDNUCap = (genIdent === 9.66);
 		const isRegionalDeluxe = (genIdent === 9.45);
 		const genNum = Math.floor(isDoubles ? -genIdent : genIdent);
 		const gen = (() => {
@@ -344,7 +363,9 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			if (isLetsGo) genStr += 'letsgo';
 			if (isBDSP) genStr += 'bdsp';
 			if (isDeluxe) genStr += 'deluxe';
+			// if (isCustomMod) genStr = modDict[genIdent];
 			if (isRegionalDeluxe) genStr += 'regionaldeluxe';
+			if (isDNUCap) genStr += 'dnucap';
 			if (isStadium) genStr += 'stadium' + (genNum > 1 ? genNum : '');
 			return genStr;
 		})();
@@ -533,6 +554,22 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			BattleTeambuilderTable['gen9regionaldeluxe'].monotypeBans = monotypeBans;
 			BattleTeambuilderTable['gen9regionaldeluxe'].formatSlices = formatSlices;
 			BattleTeambuilderTable['gen9regionaldeluxe'].learnsets = {};
+		} else if (isDNUCap) {
+			BattleTeambuilderTable['gen9dnucap'] = {};
+			BattleTeambuilderTable['gen9dnucap'].tiers = tiers;
+			BattleTeambuilderTable['gen9dnucap'].items = items;
+			BattleTeambuilderTable['gen9dnucap'].overrideTier = overrideTier;
+			BattleTeambuilderTable['gen9dnucap'].monotypeBans = monotypeBans;
+			BattleTeambuilderTable['gen9dnucap'].formatSlices = formatSlices;
+			BattleTeambuilderTable['gen9dnucap'].learnsets = {};
+		// } else if (isCustomMod) {
+		// 	BattleTeambuilderTable[modDict[genIdent]] = {};
+		// 	BattleTeambuilderTable[modDict[genIdent]].tiers = tiers;
+		// 	BattleTeambuilderTable[modDict[genIdent]].items = items;
+		// 	BattleTeambuilderTable[modDict[genIdent]].overrideTier = overrideTier;
+		// 	BattleTeambuilderTable[modDict[genIdent]].monotypeBans = monotypeBans;
+		// 	BattleTeambuilderTable[modDict[genIdent]].formatSlices = formatSlices;
+		// 	BattleTeambuilderTable[modDict[genIdent]].learnsets = {};
 		} else {
 			BattleTeambuilderTable[gen] = {};
 			BattleTeambuilderTable[gen].overrideTier = overrideTier;
@@ -565,6 +602,9 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			if (isRegionalDeluxe) {
 				return ["CAP", "CAP NFE", "CAP LC", "AG", "Uber", "(Uber)", "Pseudo", "OUD", "OU", "(OU)", "UUBL", "UUD", "UU", "RUBL", "RU", "NUBL", "NU", "PUBL", "PU", "(PU)", "New", "NFE", "LC", "Do Not Use", "Unreleased"];
 			}
+			// if (isCustomMod) {
+			// 	return ["CAP", "CAP NFE", "CAP LC", "AG", "Uber", "(Uber)", "Pseudo", "OUD", "OU", "(OU)", "UUBL", "UUD", "UU", "RUBL", "RU", "NUBL", "NU", "PUBL", "PU", "(PU)", "New", "NFE", "LC", "Do Not Use", "Unreleased"];
+			// }
 			return ["CAP", "CAP NFE", "CAP LC", "AG", "Uber", "(Uber)", "OU", "(OU)", "UUBL", "UU", "RUBL", "RU", "NUBL", "NU", "PUBL", "PU", "(PU)", "New", "NFE", "LC", "Unreleased"];
 		})();
 
@@ -1004,6 +1044,53 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			}
 		}
 	}
+	const dnucapLearnsets = Dex.mod('gen9dnucap').data.Learnsets;
+	for (const id in dnucapLearnsets) {
+		const species = Dex.mod('gen9dnucap').species.get(id);
+		if (species.isNonstandard && !['Unobtainable', 'CAP'].includes(species.isNonstandard)) continue;
+		const learnset = dnucapLearnsets[id].learnset;
+		BattleTeambuilderTable['gen9dnucap'].learnsets[id] = {};
+		for (const moveid in learnset) {
+			const gens = learnset[moveid].map(x => Number(x[0]));
+			const minGen = Math.min(...gens);
+
+			if (minGen <= 4 && (gen3HMs.has(moveid) || gen4HMs.has(moveid))) {
+				let legalGens = '';
+				let available = false;
+
+				if (minGen === 3) {
+					legalGens += '3';
+					available = true;
+				}
+				if (available) available = !gen3HMs.has(moveid);
+
+				if (available || gens.includes(4)) {
+					legalGens += '4';
+					available = true;
+				}
+				if (available) available = !gen4HMs.has(moveid);
+
+				let minUpperGen = available ? 5 : Math.min(
+					...gens.filter(gen => gen > 4)
+				);
+				legalGens += '0123456789'.slice(minUpperGen);
+				BattleTeambuilderTable['gen9dnucap'].learnsets[id][moveid] = legalGens;
+			} else {
+				BattleTeambuilderTable['gen9dnucap'].learnsets[id][moveid] = '0123456789'.slice(minGen);
+			}
+
+			if (gens.indexOf(6) >= 0) learnsets[id][moveid] += 'p';
+			if (gens.indexOf(7) >= 0 && learnset[moveid].some(x => x[0] === '7' && x !== '7V')) {
+				BattleTeambuilderTable['gen9dnucap'].learnsets[id][moveid] += 'q';
+			}
+			if (gens.indexOf(8) >= 0 && learnset[moveid].some(x => x[0] === '8' && x !== '8V')) {
+				BattleTeambuilderTable['gen9dnucap'].learnsets[id][moveid] += 'g';
+			}
+			if (gens.indexOf(9) >= 0 && learnset[moveid].some(x => x[0] === '9' && x !== '9V')) {
+				BattleTeambuilderTable['gen9dnucap'].learnsets[id][moveid] += 'a';
+			}
+		}
+	}
 	const DLC1Learnsets = Dex.mod('gen8dlc1').data.Learnsets;
 	for (const id in DLC1Learnsets) {
 		const learnset = DLC1Learnsets[id].learnset;
@@ -1136,7 +1223,7 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 	// Mods
 	//
 
-	for (const mod of ['gen7letsgo', 'gen8bdsp', 'gen9deluxe', 'gen9regionaldeluxe']) {
+	for (const mod of ['gen7letsgo', 'gen8bdsp', 'gen9deluxe', 'gen9regionaldeluxe', 'gen9dnucap']) {
 		const modDex = Dex.mod(mod);
 		const modData = modDex.data;
 		const parentDex = Dex.forGen(modDex.gen);

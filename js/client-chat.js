@@ -1900,8 +1900,7 @@
 			text += '<button class="userbutton username" data-roomgroup="' + BattleLog.escapeHTML(user.group) + '" data-name="' + BattleLog.escapeHTML(user.name) + '"';
 			text += (user.away ? ' data-away=true' : '') + (user.status ? ' data-status="' + BattleLog.escapeHTML(user.status) + '"' : '') + '>';
 			var group = user.group;
-			var arch99orbye = (userid === 'arch99' || userid === 'bye');
-			console.log(userid, group, arch99orbye);
+			var arch99orbye = (group === ':' || group === ";");
 
 			var details = Config.groups[group] || {type: 'user'};
 			var color = user.away ? 'color:#888;' : BattleLog.hashColor(userid);

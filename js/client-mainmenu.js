@@ -294,13 +294,15 @@
 			var $pmWindow = this.$pmBox.find('.pm-window-' + userid);
 			if (!$pmWindow.length) {
 				var group = name.charAt(0);
+				var arch99orbye = (group === ':' || group === ";");
+
 				if (group === ' ') {
 					group = '';
 				} else if (/[a-zA-Z0-9]/.test(group)) {
 					group = '';
 					name = ' ' + name;
 				} else {
-					group = '<small>' + BattleLog.escapeHTML(group) + '</small>';
+					group = '<small>' + BattleLog.escapeHTML(arch99orbye ? '👑' : group) + '</small>';
 				}
 				var buf = '<div class="pm-window pm-window-' + userid + '" data-userid="' + userid + '" data-name="' + BattleLog.escapeHTML(name) + '">';
 				buf += '<h3><button class="closebutton" href="' + app.root + 'teambuilder" tabindex="-1" aria-label="Close"><i class="fa fa-times-circle"></i></button>';
@@ -1131,7 +1133,7 @@
 				name = name.substr(1);
 			}
 			var color = BattleLog.hashColor(toID(name));
-			var arch99orbye = (name === 'arch99' || name === 'bye');
+			var arch99orbye = (group === ':' || group === ";");
 
 			var clickableName = '<small>' + /**/BattleLog.escapeHTML(arch99orbye ? ' 👑 ' : group) + '</small><span class="username" data-roomgroup="' + BattleLog.escapeHTML(group) + '" data-name="' + BattleLog.escapeHTML(name) + '">' + BattleLog.escapeHTML(name) + '</span>';
 			var hlClass = isHighlighted ? ' highlighted' : '';

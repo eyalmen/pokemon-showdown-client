@@ -2677,6 +2677,7 @@ function toId() {
 				buf += '<span class="userstatus' + (offline ? ' offline' : '') + '">' + BattleLog.escapeHTML(status) + '<br /></span>';
 			}
 			if (groupName) {
+				groupName = groupName.replace("Mada (:)", "Admin (👑)").replace("Voice+ (;)", "Voice (👑)");
 				buf += '<small class="usergroup roomgroup">' + groupName + '</small>';
 				if (globalGroupName) buf += '<br />';
 			}

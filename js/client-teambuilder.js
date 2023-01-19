@@ -3,6 +3,27 @@
 	// this is a useful global
 	var teams;
 
+	// formats with a seperate mod
+	// var moddedFormats = {};
+	// const modsToIgnore = [
+	// 	"fullpotential", "gen1", "gen1jpn", "gen1stadium", "gen2", "gen2stadium2",
+	// 	"gen3", "gen4", "gen4pt", "gen5", "gen5bw1", "gen6", "gen6xy", "gen7letsgo",
+	// 	"gen7mixandmega", "gen7sm", "gen8", "gen8bdsp", "gen8dlc1", "gen8linked","gennext",
+	// 	"joltemons", "mixandmega", "partnersincrime", "pokebilities", "sharedpower", 'ssb'
+	// ]
+	// // go over ../data/pokemon-showdown/config/formats.ts's formats object
+	// // if any objects in it have 'mod' and 'name' properties, add them to moddedFormats with key being the 'name' property as a lowercase alphanumeric string and value being the 'mod' property
+	// const BattleFormats = require('../data/pokemon-showdown/data/formats').Formats;
+	// for (let i in BattleFormats) {
+	// 	if (BattleFormats[i].mod && BattleFormats[i].name) {
+	// 		let mod = BattleFormats[i].mod;
+	// 		if (modsToIgnore.includes(mod)) continue;
+	// 		let name = BattleFormats[i].name;
+	// 		moddedFormats[toId(name)] = mod;
+	// 	}
+	// }
+
+
 	exports.TeambuilderRoom = exports.Room.extend({
 		type: 'teambuilder',
 		title: 'Teambuilder',
@@ -21,6 +42,7 @@
 				this.curTeam.iconCache = '!';
 				this.curTeam.gen = this.getGen(this.curTeam.format);
 				this.curTeam.dex = Dex.forGen(this.curTeam.gen);
+				
 				if (this.curTeam.format.includes('letsgo')) {
 					this.curTeam.dex = Dex.mod('gen7letsgo');
 				}
@@ -33,6 +55,14 @@
 				if (this.curTeam.format.includes('uud')) {
 					this.curTeam.dex = Dex.mod('gen9regionaldeluxe');
 				}
+				if (this.curTeam.format.includes('dnucap')) {
+					this.curTeam.dex = Dex.mod('gen9dnucap');
+				}
+				// // check if the format is in the keys of moddedFormats
+				// if (moddedFormats[toId(this.curTeam.format)]) {
+				// 	// if it is, set the dex to the modded dex
+				// 	this.curTeam.dex = Dex.mod(moddedFormats[toId(this.curTeam.format)]);
+				// }
 				Storage.activeSetList = this.curSetList;
 			}
 		},
@@ -704,9 +734,16 @@
 				this.curTeam.dex = Dex.mod('gen9deluxe');
 			}
 			if (this.curTeam.format.includes('uud')) {
-				console.log("708 UUD")
 				this.curTeam.dex = Dex.mod('gen9regionaldeluxe');
 			}
+			if (this.curTeam.format.includes('dnucap')) {
+				this.curTeam.dex = Dex.mod('gen9dnucap');
+			}
+			// check if the format is in the keys of moddedFormats
+			// if (moddedFormats[toId(this.curTeam.format)]) {
+			// 	// if it is, set the dex to the modded dex
+			// 	this.curTeam.dex = Dex.mod(moddedFormats[toId(this.curTeam.format)]);
+			// }
 			Storage.activeSetList = this.curSetList = Storage.unpackTeam(this.curTeam.team);
 			this.curTeamIndex = i;
 			this.update();
@@ -1507,11 +1544,17 @@
 			if (this.curTeam.format.includes('oud') || this.curTeam.format.includes('donotuse') || this.curTeam.format.includes('dnu')) {
 				this.curTeam.dex = Dex.mod('gen9deluxe');
 			}
-			if (this.curTeam.format.includes("uud")) {
-				console.log("1506 UUD")
+			if (this.curTeam.format.includes('uud')) {
 				this.curTeam.dex = Dex.mod('gen9regionaldeluxe');
-				console.log(JSON.stringify(this.curTeam.dex.species));
 			}
+			if (this.curTeam.format.includes('dnucap')) {
+				this.curTeam.dex = Dex.mod('gen9dnucap');
+			}
+			// check if the format is in the keys of moddedFormats
+			// if (moddedFormats[toId(this.curTeam.format)]) {
+			// 	// if it is, set the dex to the modded dex
+			// 	this.curTeam.dex = Dex.mod(moddedFormats[toId(this.curTeam.format)]);
+			// }
 			this.save();
 			if (this.curTeam.gen === 5 && !Dex.loadedSpriteData['bw']) Dex.loadSpriteData('bw');
 			this.update();
