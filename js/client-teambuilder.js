@@ -52,6 +52,9 @@
 				if (this.curTeam.format.includes('oud') || this.curTeam.format.includes('donotuse') || this.curTeam.format.includes('dnu')) {
 					this.curTeam.dex = Dex.mod('gen9deluxe');
 				}
+				if (this.curTeam.format.includes('rebalanced')) {
+					this.curTeam.dex = Dex.mod('rebalanced');
+				}
 				if (this.curTeam.format.includes('uud')) {
 					this.curTeam.dex = Dex.mod('gen9regionaldeluxe');
 				}
@@ -732,6 +735,9 @@
 			}
 			if (this.curTeam.format.includes('oud') || this.curTeam.format.includes('donotuse') || this.curTeam.format.includes('dnu')) {
 				this.curTeam.dex = Dex.mod('gen9deluxe');
+			}
+			if (this.curTeam.format.includes('rebalanced')) {
+				this.curTeam.dex = Dex.mod('rebalanced');
 			}
 			if (this.curTeam.format.includes('uud')) {
 				this.curTeam.dex = Dex.mod('gen9regionaldeluxe');
@@ -1546,6 +1552,9 @@
 			}
 			if (this.curTeam.format.includes('uud')) {
 				this.curTeam.dex = Dex.mod('gen9regionaldeluxe');
+			}
+			if (this.curTeam.format.includes('rebalanced')) {
+				this.curTeam.dex = Dex.mod('rebalanced');
 			}
 			if (this.curTeam.format.includes('dnucap')) {
 				this.curTeam.dex = Dex.mod('gen9dnucap');
