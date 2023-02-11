@@ -1215,17 +1215,25 @@ class BattleTooltips {
 		if (ability === 'furcoat') {
 			stats.def *= 2;
 		}
-		if (this.battle.abilityActive('Vessel of Ruin', pokemon)) {
-			stats.spa = Math.floor(stats.spa * 0.75);
+		if (this.battle.abilityActive('Vessel of Ruin')) {
+			if (ability !== 'vesselofruin') {
+				stats.spa = Math.floor(stats.spa * 0.75);
+			}
 		}
-		if (this.battle.abilityActive('Sword of Ruin', pokemon)) {
-			stats.def = Math.floor(stats.def * 0.75);
+		if (this.battle.abilityActive('Sword of Ruin')) {
+			if (ability !== 'swordofruin') {
+				stats.def = Math.floor(stats.def * 0.75);
+			}
 		}
-		if (this.battle.abilityActive('Tablets of Ruin', pokemon)) {
-			stats.atk = Math.floor(stats.atk * 0.75);
+		if (this.battle.abilityActive('Tablets of Ruin')) {
+			if (ability !== 'tabletsofruin') {
+				stats.atk = Math.floor(stats.atk * 0.75);
+			}
 		}
-		if (this.battle.abilityActive('Beads of Ruin', pokemon)) {
-			stats.spd = Math.floor(stats.spd * 0.75);
+		if (this.battle.abilityActive('Beads of Ruin')) {
+			if (ability !== 'beadsofruin') {
+				stats.spd = Math.floor(stats.spd * 0.75);
+			}
 		}
 		const sideConditions = this.battle.mySide.sideConditions;
 		if (sideConditions['tailwind']) {
@@ -1448,13 +1456,13 @@ class BattleTooltips {
 		// Raging Bull's type depends on the Tauros forme
 		if (move.id === 'ragingbull') {
 			switch (pokemon.getSpeciesForme()) {
-			case 'Tauros-Paldea':
+			case 'Tauros-Paldea-Combat':
 				moveType = 'Fighting';
 				break;
-			case 'Tauros-Paldea-Fire':
+			case 'Tauros-Paldea-Blaze':
 				moveType = 'Fire';
 				break;
-			case 'Tauros-Paldea-Water':
+			case 'Tauros-Paldea-Aqua':
 				moveType = 'Water';
 				break;
 			}
@@ -1841,9 +1849,6 @@ class BattleTooltips {
 		if (move.flags['contact']) {
 			value.abilityModify(1.3, "Tough Claws");
 		}
-		if (moveType === 'Steel') {
-			value.abilityModify(1.5, "Steely Spirit");
-		}
 		if (move.flags['sound']) {
 			value.abilityModify(1.3, "Punk Rock");
 		}
@@ -1896,22 +1901,20 @@ class BattleTooltips {
 					auraBoosted = 'Dark Aura';
 				} else if (allyAbility === 'Aura Break') {
 					auraBroken = true;
-				} else if (allyAbility === 'Battery') {
-					if (ally !== pokemon && move.category === 'Special') {
-						value.modify(1.3, 'Battery');
-					}
-				} else if (allyAbility === 'Power Spot') {
-					if (ally !== pokemon) {
-						value.modify(1.3, 'Power Spot');
-					}
+				} else if (allyAbility === 'Battery' && ally !== pokemon && move.category === 'Special') {
+					value.modify(1.3, 'Battery');
+				} else if (allyAbility === 'Power Spot' && ally !== pokemon) {
+					value.modify(1.3, 'Power Spot');
+				} else if (allyAbility === 'Steely Spirit' && moveType === 'Steel') {
+					value.modify(1.5, 'Steely Spirit');
 				}
 			}
 			for (const foe of pokemon.side.foe.active) {
 				if (!foe || foe.fainted) continue;
-				if (foe.ability === 'Fairy Aura') {
-					if (moveType === 'Fairy') auraBoosted = 'Fairy Aura';
-				} else if (foe.ability === 'Dark Aura') {
-					if (moveType === 'Dark') auraBoosted = 'Dark Aura';
+				if (foe.ability === 'Fairy Aura' && moveType === 'Fairy') {
+					auraBoosted = 'Fairy Aura';
+				} else if (foe.ability === 'Dark Aura' && moveType === 'Dark') {
+					auraBoosted = 'Dark Aura';
 				} else if (foe.ability === 'Aura Break') {
 					auraBroken = true;
 				}
