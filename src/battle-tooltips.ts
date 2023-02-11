@@ -1345,7 +1345,30 @@ class BattleTooltips {
 	 */
 	getSpeedRange(pokemon: Pokemon): [number, number] {
 		const tr = Math.trunc || Math.floor;
-		const species = pokemon.getSpecies();
+		var species = pokemon.getSpecies();
+
+		const teambuilderMods = {
+			'gen7letsgo': ['letsgo'],
+			'gen8bdsp': ['bdsp'],
+			'gen9deluxe': ['oud', 'donotuse', 'dnu'],
+			'gen9rebalanced': ['gen9rebalanced'],
+			'gen9regionaldeluxe': ['uud'],
+			'gen9dnucap': ['dnucap'],
+		}
+
+		var dexMod = Dex.modid;
+		const battleFormat = toID(this.battle.tier);
+
+		for (const mod in teambuilderMods) {
+			for (const format of teambuilderMods[mod]) {
+				if (battleFormat.includes(format)) {
+					dexMod = mod;
+				}
+			}
+		}
+
+		species = Dex.mod(dexMod).species.get(species.name);
+
 		let baseSpe = species.baseStats.spe;
 		if (this.battle.rules['Scalemons Mod']) {
 			const bstWithoutHp = species.bst - species.baseStats.hp;
@@ -2119,7 +2142,31 @@ class BattleTooltips {
 				}
 			} else {
 				const speciesForme = clientPokemon.getSpeciesForme() || serverPokemon?.speciesForme || '';
-				const species = this.battle.dex.species.get(speciesForme);
+
+				var species = this.battle.dex.species.get(speciesForme);
+
+				const teambuilderMods = {
+					'gen7letsgo': ['letsgo'],
+					'gen8bdsp': ['bdsp'],
+					'gen9deluxe': ['oud', 'donotuse', 'dnu'],
+					'gen9rebalanced': ['gen9rebalanced'],
+					'gen9regionaldeluxe': ['uud'],
+					'gen9dnucap': ['dnucap'],
+				}
+		
+				var dexMod = Dex.modid;
+				const battleFormat = toID(this.battle.tier);
+		
+				for (const mod in teambuilderMods) {
+					for (const format of teambuilderMods[mod]) {
+						if (battleFormat.includes(format)) {
+							dexMod = mod;
+						}
+					}
+				}
+		
+				species = Dex.mod(dexMod).species.get(species.name);
+
 				if (species.exists && species.abilities) {
 					abilityData.possibilities = [species.abilities['0']];
 					if (species.abilities['1']) abilityData.possibilities.push(species.abilities['1']);
