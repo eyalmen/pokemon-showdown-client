@@ -42,25 +42,24 @@
 				this.curTeam.iconCache = '!';
 				this.curTeam.gen = this.getGen(this.curTeam.format);
 				this.curTeam.dex = Dex.forGen(this.curTeam.gen);
-				
-				if (this.curTeam.format.includes('letsgo')) {
-					this.curTeam.dex = Dex.mod('gen7letsgo');
+
+				const teambuilderMods = {
+					'gen7letsgo': ['letsgo'],
+					'gen8bdsp': ['bdsp'],
+					'gen9deluxe': ['oud', 'donotuse', 'dnu'],
+					'gen9rebalanced': ['gen9rebalanced'],
+					'gen9regionaldeluxe': ['uud'],
+					'gen9dnucap': ['dnucap'],
 				}
-				if (this.curTeam.format.includes('bdsp')) {
-					this.curTeam.dex = Dex.mod('gen8bdsp');
+
+				for (const mod in teambuilderMods) {
+					for (const format of teambuilderMods[mod]) {
+						if (this.curTeam.format.includes(format)) {
+							this.curTeam.dex = Dex.mod(mod);
+						}
+					}
 				}
-				if (this.curTeam.format.includes('oud') || this.curTeam.format.includes('donotuse') || this.curTeam.format.includes('dnu')) {
-					this.curTeam.dex = Dex.mod('gen9deluxe');
-				}
-				if (this.curTeam.format.includes('rebalanced')) {
-					this.curTeam.dex = Dex.mod('rebalanced');
-				}
-				if (this.curTeam.format.includes('uud')) {
-					this.curTeam.dex = Dex.mod('gen9regionaldeluxe');
-				}
-				if (this.curTeam.format.includes('dnucap')) {
-					this.curTeam.dex = Dex.mod('gen9dnucap');
-				}
+
 				// // check if the format is in the keys of moddedFormats
 				// if (moddedFormats[toId(this.curTeam.format)]) {
 				// 	// if it is, set the dex to the modded dex
@@ -727,24 +726,24 @@
 			this.curTeam.iconCache = '!';
 			this.curTeam.gen = this.getGen(this.curTeam.format);
 			this.curTeam.dex = Dex.forGen(this.curTeam.gen);
-			if (this.curTeam.format.includes('letsgo')) {
-				this.curTeam.dex = Dex.mod('gen7letsgo');
+
+			const teambuilderMods = {
+				'gen7letsgo': ['letsgo'],
+				'gen8bdsp': ['bdsp'],
+				'gen9deluxe': ['oud', 'donotuse', 'dnu'],
+				'gen9rebalanced': ['gen9rebalanced'],
+				'gen9regionaldeluxe': ['uud'],
+				'gen9dnucap': ['dnucap'],
 			}
-			if (this.curTeam.format.includes('bdsp')) {
-				this.curTeam.dex = Dex.mod('gen8bdsp');
+
+			for (const mod in teambuilderMods) {
+				for (const format of teambuilderMods[mod]) {
+					if (this.curTeam.format.includes(format)) {
+						this.curTeam.dex = Dex.mod(mod);
+					}
+				}
 			}
-			if (this.curTeam.format.includes('oud') || this.curTeam.format.includes('donotuse') || this.curTeam.format.includes('dnu')) {
-				this.curTeam.dex = Dex.mod('gen9deluxe');
-			}
-			if (this.curTeam.format.includes('rebalanced')) {
-				this.curTeam.dex = Dex.mod('rebalanced');
-			}
-			if (this.curTeam.format.includes('uud')) {
-				this.curTeam.dex = Dex.mod('gen9regionaldeluxe');
-			}
-			if (this.curTeam.format.includes('dnucap')) {
-				this.curTeam.dex = Dex.mod('gen9dnucap');
-			}
+			
 			// check if the format is in the keys of moddedFormats
 			// if (moddedFormats[toId(this.curTeam.format)]) {
 			// 	// if it is, set the dex to the modded dex
@@ -1541,24 +1540,24 @@
 			this.curTeam.format = format;
 			this.curTeam.gen = this.getGen(this.curTeam.format);
 			this.curTeam.dex = Dex.forGen(this.curTeam.gen);
-			if (this.curTeam.format.includes('letsgo')) {
-				this.curTeam.dex = Dex.mod('gen7letsgo');
+			
+			const teambuilderMods = {
+				'gen7letsgo': ['letsgo'],
+				'gen8bdsp': ['bdsp'],
+				'gen9deluxe': ['oud', 'donotuse', 'dnu'],
+				'gen9rebalanced': ['gen9rebalanced'],
+				'gen9regionaldeluxe': ['uud'],
+				'gen9dnucap': ['dnucap'],
 			}
-			if (this.curTeam.format.includes('bdsp')) {
-				this.curTeam.dex = Dex.mod('gen8bdsp');
+
+			for (const mod in teambuilderMods) {
+				for (const format of teambuilderMods[mod]) {
+					if (this.curTeam.format.includes(format)) {
+						this.curTeam.dex = Dex.mod(mod);
+					}
+				}
 			}
-			if (this.curTeam.format.includes('oud') || this.curTeam.format.includes('donotuse') || this.curTeam.format.includes('dnu')) {
-				this.curTeam.dex = Dex.mod('gen9deluxe');
-			}
-			if (this.curTeam.format.includes('uud')) {
-				this.curTeam.dex = Dex.mod('gen9regionaldeluxe');
-			}
-			if (this.curTeam.format.includes('rebalanced')) {
-				this.curTeam.dex = Dex.mod('rebalanced');
-			}
-			if (this.curTeam.format.includes('dnucap')) {
-				this.curTeam.dex = Dex.mod('gen9dnucap');
-			}
+
 			// check if the format is in the keys of moddedFormats
 			// if (moddedFormats[toId(this.curTeam.format)]) {
 			// 	// if it is, set the dex to the modded dex
@@ -1871,6 +1870,23 @@
 			this.$chart = this.$('.teambuilder-results');
 			if (BattleSearch !== undefined) {
 				this.search = new BattleSearch(this.$chart, this.$chart);
+
+				const teambuilderMods = {
+					'gen7letsgo': ['letsgo'],
+					'gen8bdsp': ['bdsp'],
+					'gen9deluxe': ['oud', 'donotuse', 'dnu'],
+					'gen9rebalanced': ['gen9rebalanced'],
+					'gen9regionaldeluxe': ['uud'],
+					'gen9dnucap': ['dnucap'],
+				}
+
+				for (const mod in teambuilderMods) {
+					for (const format of teambuilderMods[mod]) {
+						if (this.curTeam.format.includes(format)) {
+							this.search.mod = mod;
+						}
+					}
+				}
 
 				var self = this;
 				// fun fact: Backbone DOM events don't support scroll...

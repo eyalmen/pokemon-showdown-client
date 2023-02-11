@@ -629,7 +629,7 @@ abstract class BattleTypedSearch<T extends SearchType> {
 			this.formatType = 'deluxe';
 		}
 		if (format.includes('rebalanced')) {
-			this.dex = Dex.mod('rebalanced' as ID);
+			this.dex = Dex.mod('gen9rebalanced' as ID);
 			this.formatType = 'rebalanced';
 		}
 		if (format.includes('dnucap')) {
@@ -759,7 +759,7 @@ abstract class BattleTypedSearch<T extends SearchType> {
 		if (this.formatType === 'letsgo') table = table['gen7letsgo'];
 		if (this.formatType === 'deluxe') table = table['gen9deluxe'];
 		if (this.formatType === 'dnucap') table = table['gen9dnucap'];
-		if (this.formatType === 'rebalanced') table = table['rebalanced'];
+		if (this.formatType === 'rebalanced') table = table['gen9rebalanced'];
 		if (this.formatType === 'regionaldeluxe') table = table['gen9regionaldeluxe'];
 		// if (this.formatType === 'custom') table = table[]
 		if (speciesid in table.learnsets) return speciesid;
@@ -820,7 +820,7 @@ abstract class BattleTypedSearch<T extends SearchType> {
 			if (this.formatType === 'letsgo') table = table['gen7letsgo'];
 			if (this.formatType === 'deluxe') table = table['gen9deluxe'];
 			if (this.formatType === 'dnucap') table = table['gen9dnucap'];
-			if (this.formatType === 'rebalanced') table = table['rebalanced'];
+			if (this.formatType === 'rebalanced') table = table['gen9rebalanced'];
 			if (this.formatType === 'regionaldeluxe') table = table['gen9regionaldeluxe'];
 			let learnset = table.learnsets[learnsetid];
 			if (learnset && (moveid in learnset) && (!this.format.startsWith('tradebacks') ? learnset[moveid].includes(genChar) :
@@ -843,7 +843,7 @@ abstract class BattleTypedSearch<T extends SearchType> {
 			this.formatType === 'bdsp' ? 'gen8bdsp' :
 			this.formatType === 'deluxe' ? 'gen9deluxe' :
 			this.formatType === 'dnucap' ? 'gen9dnucap' :
-			this.formatType === 'rebalanced' ? 'rebalanced' :
+			this.formatType === 'rebalanced' ? 'gen9rebalanced' :
 			this.formatType === 'regionaldeluxe' ? 'gen9regionaldeluxe' :
 			this.formatType === 'bdspdoubles' ? 'gen8bdspdoubles' :
 			this.formatType === 'nfe' ? `gen${gen}nfe` :
@@ -961,7 +961,7 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 		} else if (this.formatType === 'regionaldeluxe') {
 			table = table['gen9regionaldeluxe'];
 		} else if (this.formatType === 'rebalanced') {
-			table = table['rebalanced'];
+			table = table['gen9rebalanced'];
 		} else if (this.formatType === 'letsgo') {
 			table = table['gen7letsgo'];
 		} else if (this.formatType === 'natdex') {
@@ -989,7 +989,7 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 		}
 		let tierSet: SearchRow[] = table.tierSet;
 		let slices: {[k: string]: number} = table.formatSlices;
-		if (format === 'ubers' || format === 'uber') tierSet = tierSet.slice(slices.Uber);
+		if (format === 'ubers' || format === 'uber' || format.includes("uber")) tierSet = tierSet.slice(slices.Uber);
 		else if (isVGCOrBS) {
 			if (format.endsWith('series13')) {
 				// Show Mythicals
@@ -1218,7 +1218,7 @@ class BattleItemSearch extends BattleTypedSearch<'item'> {
 		} else if (this.formatType === "dnucap") {
 			table = table['gen9dnucap'];
 		} else if (this.formatType === "rebalanced") {
-			table = table['rebalanced'];
+			table = table['gen9rebalanced'];
 		} else if (this.formatType === "regionaldeluxe") {
 			console.log("formatType is regionaldeluxe");
 			table = table['gen9regionaldeluxe'];
@@ -1550,7 +1550,7 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 		if (this.formatType?.startsWith('bdsp')) lsetTable = lsetTable['gen8bdsp'];
 		if (this.formatType?.startsWith('deluxe')) {lsetTable = lsetTable['gen9deluxe'];}
 		if (this.formatType?.startsWith('dnucap')) {lsetTable = lsetTable['gen9dnucap'];}
-		if (this.formatType?.startsWith('rebalanced')) {lsetTable = lsetTable['rebalanced'];}
+		if (this.formatType?.startsWith('rebalanced')) {lsetTable = lsetTable['gen9rebalanced'];}
 		if (this.formatType?.startsWith('regionaldeluxe')) {lsetTable = lsetTable['gen9regionaldeluxe'];}
 		if (this.formatType === 'letsgo') lsetTable = lsetTable['gen7letsgo'];
 		if (this.formatType?.startsWith('dlc1')) lsetTable = lsetTable['gen8dlc1'];
