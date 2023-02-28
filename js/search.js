@@ -206,7 +206,11 @@
 			var item = this.engine.dex.items.get(id);
 			return this.renderItemRow(item, matchStart, matchLength, errorMessage, attrs);
 		case 'ability':
+			if (this.mod !== undefined && this.mod !== null) this.engine.dex = Dex.mod(this.mod);
 			var ability = this.engine.dex.abilities.get(id);
+			// alert(this.engine.dex.modid);
+			// alert(JSON.stringify(ability));
+
 			return this.renderAbilityRow(ability, matchStart, matchLength, errorMessage, attrs);
 		case 'type':
 			var type = {name: id[0].toUpperCase() + id.substr(1)};

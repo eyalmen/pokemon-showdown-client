@@ -973,6 +973,7 @@ const BattleAvatarNumbers: {[k: string]: string} = {
     302: 'staraptor',
     303: 'woopa',
     304: 'demirab',
+    305: 'magnezone',
 	'#bw2elesa': 'elesa-gen5bw2',
 	'#teamrocket': 'teamrocket',
 	'#yellow': 'yellow',

@@ -192,7 +192,7 @@ class DefaultActionHandler {
 		$serverhostname = '' . $dispatcher->getServerHostName(@$reqData['serverid']);
 		$user = [
 			'username' => @$_POST['username'],
-			'pronouns' => @$reqData['pronouns'] != NULL ? @$reqData['pronouns'] : 'unset',
+			'description' => @$reqData['description'] != NULL ? @$reqData['description'] : 'unset',
 		];
 		$userid = $users->userid($user['username']);
 		if ((mb_strlen($userid) < 1) || ctype_digit($userid)) {
@@ -250,29 +250,29 @@ class DefaultActionHandler {
 		}
 	}
 
-	public function changepronouns($dispatcher, &$reqData, &$out) {
+	public function changedescription($dispatcher, &$reqData, &$out) {
 		global $users, $curuser;
 
 		if (!$_POST ||
-				!isset($reqData['pronouns'])) {
+				!isset($reqData['description'])) {
 			$out['actionerror'] = 'Invalid request.';
 		} else if (!$curuser['loggedin']) {
 			$out['actionerror'] = 'Your session has expired. Please log in again.';
 		} else if (!$users->modifyUser($curuser['userid'], array(
-				'pronouns' => $reqData['pronouns']))) {
+				'description' => $reqData['description']))) {
 			$out['actionerror'] = 'A database error occurred. Please try again.';
 		} else {
 			$out['actionsuccess'] = true;
 		}
 	}
 
-	public function getpronouns($dispatcher, &$reqData, &$out) {
+	public function getdescription($dispatcher, &$reqData, &$out) {
 		global $users, $curuser;
 		// this only needs the username
 		if (!isset($reqData['username'])) {
 			$out['actionerror'] = 'Invalid request.';
 		} else {
-			$out['pronouns'] = $users->getPronouns($reqData['username']);
+			$out['description'] = $users->getdescription($reqData['username']);
 			$out['actionsuccess'] = true;
 		}
 	}

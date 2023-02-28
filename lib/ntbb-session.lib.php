@@ -635,9 +635,9 @@ class NTBBSession {
 				$this->login($userid, $changes['password']);
 			}
 		}
-		if (!empty($changes['pronouns'])) {
-			$pronouns = $changes['pronouns'];
-			$psdb->query("UPDATE `{$psdb->prefix}users` SET `pronouns` = ? WHERE `userid` = ?", [$pronouns, $user['userid']]);
+		if (!empty($changes['description'])) {
+			$description = $changes['description'];
+			$psdb->query("UPDATE `{$psdb->prefix}users` SET `description` = ? WHERE `userid` = ?", [$description, $user['userid']]);
 			if ($psdb->error()) {
 				return false;
 			}
@@ -675,16 +675,16 @@ class NTBBSession {
 		return true;
 	}
 
-	function getpronouns($userid) {
+	function getdescription($userid) {
 		global $psdb;
 
-		$res = $psdb->query("SELECT `pronouns` FROM `{$psdb->prefix}users` WHERE `userid` = ? LIMIT 1", [$userid]);
+		$res = $psdb->query("SELECT `description` FROM `{$psdb->prefix}users` WHERE `userid` = ? LIMIT 1", [$userid]);
 		if (!$res) // query failed for weird reason
 			return false;
 		$user = $psdb->fetch_assoc($res);
 		// if (!$user['userid']) return false;
 
-		return $user['pronouns'];
+		return $user['description'];
 	}
 
 	function getRecentRegistrationCount($ip = '', $timeperiod = 7200 /* 2 hours */) {
@@ -715,8 +715,8 @@ class NTBBSession {
 		$user['passwordhash'] = $this->passwordHash($password);
 
 
-		if (!isset($user['pronouns'])) {
-			$user['pronouns'] = "unset";
+		if (!isset($user['description'])) {
+			$user['description'] = "unset";
 		}
 
 		if (!$this->isUseridAllowed($user['userid'])) {
@@ -729,8 +729,8 @@ class NTBBSession {
 		}
 
 		$psdb->query(
-			"INSERT INTO `{$psdb->prefix}users` (`userid`,`username`,`passwordhash`,`email`,`registertime`,`ip`, `pronouns`) VALUES (?, ?, ?, ?, ?, ?, ?)",
-			[$user['userid'], $user['username'], $user['passwordhash'], @$user['email'], $ctime, $this->getIp(), $user['pronouns']]
+			"INSERT INTO `{$psdb->prefix}users` (`userid`,`username`,`passwordhash`,`email`,`registertime`,`ip`, `description`) VALUES (?, ?, ?, ?, ?, ?, ?)",
+			[$user['userid'], $user['username'], $user['passwordhash'], @$user['email'], $ctime, $this->getIp(), $user['description']]
 		);
 		if ($psdb->error()) {
 			return false;

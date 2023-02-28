@@ -483,7 +483,7 @@
 				var registered = app.user.get('registered');
 				if (registered && (registered.userid === app.user.get('userid'))) {
 					buf += '<p><button name="changepassword">Password change</button></p>';
-					buf += '<p><button name="changepronouns">Change pronouns</button></p>';
+					buf += '<p><button name="changedescription">Change description</button></p>';
 				} else {
 					buf += '<p><button name="register">Register</button></p>';
 				}
@@ -675,8 +675,8 @@
 		changepassword: function () {
 			app.addPopup(ChangePasswordPopup);
 		},
-		changepronouns: function () {
-			app.addPopup(ChangePronounsPopup);
+		changedescription: function () {
+			app.addPopup(ChangedescriptionPopup);
 		},
 		logout: function () {
 			app.user.logout();
@@ -988,29 +988,29 @@
 		}
 	});
 
-	var ChangePronounsPopup = this.ChangePronounsPopup = Popup.extend({
+	var ChangedescriptionPopup = this.ChangedescriptionPopup = Popup.extend({
 		type: 'semimodal',
 		initialize: function (data) {
 			var buf = '<form>';
 			if (data.error) {
 				buf += '<p class="error">' + data.error + '</p>';
 			} else {
-				buf += '<p>Change your listed pronouns:<br>(do not abuse this)</p>';
+				buf += '<p>Change your user description:</p>';
 			}
-			buf += '<p><label class="label">Pronouns: <input class="textbox autofocus" type="text" name="pronouns" value="' + BattleLog.escapeHTML(app.user.get('pronouns')) + '" /></label></p>';
-			buf += '<p class="buttonbar"><button type="submit"><strong>Change pronouns</strong></button> <button type="button" name="close">Cancel</button></p></form>';
+			buf += '<p><label class="label">description: <input class="textbox autofocus" type="text" name="description" value="' + BattleLog.escapeHTML(app.user.get('description')) + '" /></label></p>';
+			buf += '<p class="buttonbar"><button type="submit"><strong>Change description</strong></button> <button type="button" name="close">Cancel</button></p></form>';
 			this.$el.html(buf);
 		},
 		submit: function (data) {
 			$.post(app.user.getActionPHP(), {
-				act: 'changepronouns',
-				pronouns: data.pronouns
+				act: 'changedescription',
+				description: data.description
 			}, Storage.safeJSON(function (data) {
 				if (!data) data = {};
 				if (data.actionsuccess) {
-					app.addPopupMessage("Your pronouns were successfully changed.");
+					app.addPopupMessage("Your description was successfully changed.");
 				} else {
-					app.addPopup(ChangePronounsPopup, {
+					app.addPopup(ChangedescriptionPopup, {
 						error: data.actionerror
 					});
 				}
@@ -1030,7 +1030,7 @@
 				buf += '<p>Register your account:</p>';
 			}
 			buf += '<p><label class="label">Username: <strong><input type="text" name="name" value="' + BattleLog.escapeHTML(data.name || app.user.get('name')) + '" style="color:inherit;background:transparent;border:0;font:inherit;font-size:inherit;display:block" readonly autocomplete="username" /></strong></label></p>';
-			buf += '<p><label class="label">Pronouns (optional, don\'t abuse this): <input class="textbox" type="text" name="pronouns" value="' + BattleLog.escapeHTML(data.pronouns || app.user.get('pronouns')) + '" /></label></p>';
+			buf += '<p><label class="label">Description (pronouns, timezones, etc): <input class="textbox" type="text" name="description" value="' + BattleLog.escapeHTML(data.description || app.user.get('description')) + '" /></label></p>';
 			buf += '<p><label class="label">Password: <input class="textbox autofocus" type="password" name="password" autocomplete="new-password" /></label></p>';
 			buf += '<p><label class="label">Password (confirm): <input class="textbox" type="password" name="cpassword" autocomplete="new-password" /></label></p>';
 			buf += '<p><label class="label"><img src="' + Dex.resourcePrefix + 'sprites/gen5ani/pikachu.gif" alt="An Electric-type mouse that is the mascot of the Pok\u00E9mon franchise." /></label></p>';
@@ -1042,8 +1042,8 @@
 			var name = data.name;
 			var captcha = data.captcha;
 
-			if (data.pronouns === '') {
-				data.pronouns = 'unset';
+			if (data.description === '') {
+				data.description = 'unset';
 			}
 
 			$.post(app.user.getActionPHP(), {
@@ -1051,7 +1051,7 @@
 				username: name,
 				password: data.password,
 				cpassword: data.cpassword,
-				pronouns: data.pronouns,
+				description: data.description,
 				captcha: captcha,
 				challstr: app.user.challstr
 			}, Storage.safeJSON(function (data) {

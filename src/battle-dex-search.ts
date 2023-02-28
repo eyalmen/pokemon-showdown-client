@@ -1001,12 +1001,12 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 			} else {
 				tierSet = tierSet.slice(slices.Regular);
 			}
-		} else if (format === 'ou') tierSet = tierSet.slice(slices.OU);
+		} else if (format === 'ou' || format.includes("rebalancedou")) tierSet = tierSet.slice(slices.OU);
 		else if (format === "oud") tierSet = tierSet.slice(slices.OUD);
 		else if (format === "uud") tierSet = tierSet.slice(slices.UUD);
 		else if (format.includes("donotuse") || format.includes("dnu")) tierSet = tierSet.slice(slices['Do Not Use']);
-		else if (format === 'uu') tierSet = tierSet.slice(slices.UU);
-		else if (format === 'ru') tierSet = tierSet.slice(slices.RU || slices.UU);
+		else if (format === 'uu' || format.includes("rebalanceduu")) tierSet = tierSet.slice(slices.UU);
+		else if (format === 'ru' || format.includes("rebalancedru")) tierSet = tierSet.slice(slices.RU || slices.UU);
 		else if (format === 'nu') tierSet = tierSet.slice(slices.NU || slices.RU || slices.UU);
 		else if (format === 'pu') tierSet = tierSet.slice(slices.PU || slices.NU);
 		else if (format === 'zu') tierSet = tierSet.slice(slices.ZU || slices.PU || slices.NU);

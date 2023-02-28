@@ -3561,8 +3561,12 @@
 		},
 		setForm: function (form) {
 			var species = Dex.species.get(this.curSet.species);
+			var baseSpecies = species.baseSpecies;
 			if (form && form !== species.form) {
 				this.curSet.species = Dex.species.get(species.baseSpecies + form).name;
+				if (baseSpecies === 'Iron Strikes') { //god save me
+					this.curSet.species = 'Iron Strikes-' + form;
+				}
 			} else if (!form) {
 				this.curSet.species = species.baseSpecies;
 			}

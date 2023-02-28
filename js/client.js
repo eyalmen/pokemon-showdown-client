@@ -2622,16 +2622,16 @@ function toId() {
 			app.on('response:userdetails', this.update, this);
 			app.send('/cmd userdetails ' + data.userid);
 
-			data.pronouns = JSON.parse(
+			data.description = JSON.parse(
 				$.ajax({
 					url: 'https://play.pseudo.gq/action.php',
 					type: 'POST', 
 					data: { 
-						act: 'getpronouns', 
+						act: 'getdescription', 
 						username: data.userid
 					}, 
 					async: false 
-				}).responseText.replace("]", "")).pronouns;
+				}).responseText.replace("]", "")).description;
 
 			this.update();
 		},
@@ -2651,7 +2651,7 @@ function toId() {
 			}
 			var userid = data.userid;
 			var name = data.name;
-			var pronouns = data.pronouns;
+			var description = data.description;
 			var avatar = data.avatar || '';
 			var groupName = ((Config.groups[data.roomGroup] || {}).name || '');
 			var globalGroup = (Config.groups[data.group || Config.defaultGroup || ' '] || null);
@@ -2670,7 +2670,7 @@ function toId() {
 			var buf = '<div class="userdetails">';
 			if (avatar) buf += '<img class="trainersprite' + (userid === ownUserid ? ' yours' : '') + '" src="' + Dex.resolveAvatar(avatar) + '" />';
 			buf += '<strong><a href="//' + Config.routes.users + '/' + userid + '" target="_blank">' + BattleLog.escapeHTML(name) + '</a></strong><br />';
-			if (pronouns && pronouns != "unset") buf += '<small class="usergroup">' + pronouns + '</small><br />';
+			if (description && description != "unset") buf += '<small class="usergroup">' + description + '</small><br />';
 			var offline = data.rooms === false;
 			if (data.status || offline) {
 				var status = offline ? '(Offline)' : data.status.startsWith('!') ? data.status.slice(1) : data.status;
