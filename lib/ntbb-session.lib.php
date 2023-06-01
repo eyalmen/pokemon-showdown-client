@@ -313,9 +313,9 @@ class NTBBSession {
 		];
 
 		$setcookie = setcookie('sid', $this->scookie, $ctime + (363)*24*60*60, '/','', true, true);
-		// setcookie('sid', $this->scookie, ['expires' => time() + (363)*24*60*60, 'path' => '/', 'domain' => play.pseudo.gq, 'secure' => true, 'httponly' => true, 'samesite' => 'None']);
+		// setcookie('sid', $this->scookie, ['expires' => time() + (363)*24*60*60, 'path' => '/', 'domain' => play.othermetas.com, 'secure' => true, 'httponly' => true, 'samesite' => 'None']);
 		$encodedcookie = rawurlencode($this->scookie);
-		// header("Set-Cookie: sid=$encodedcookie; Max-Age=31363200; Domain={play.pseudo.gq}; Path=/; Secure; SameSite=None");
+		// header("Set-Cookie: sid=$encodedcookie; Max-Age=31363200; Domain={play.othermetas.com}; Path=/; Secure; SameSite=None");
 
 		return $curuser;
 	}
@@ -326,9 +326,9 @@ class NTBBSession {
 			$this->sid = $this->mksid($this->sid);
 			$this->scookie = ',,' . $this->sid;
 			$setcookie = setcookie('sid', $this->scookie, $ctime + (363)*24*60*60, '/','', true, true);
-			// setcookie('sid', $this->scookie, ['expires' => time() + (363)*24*60*60, 'path' => '/', 'domain' => play.pseudo.gq, 'secure' => true, 'httponly' => true, 'samesite' => 'None']);
+			// setcookie('sid', $this->scookie, ['expires' => time() + (363)*24*60*60, 'path' => '/', 'domain' => play.othermetas.com, 'secure' => true, 'httponly' => true, 'samesite' => 'None']);
 			$encodedcookie = rawurlencode($this->scookie);
-			// header("Set-Cookie: sid=$encodedcookie; Max-Age=31363200; Domain={play.pseudo.gq}; Path=/; Secure; SameSite=None");
+			// header("Set-Cookie: sid=$encodedcookie; Max-Age=31363200; Domain={play.othermetas.com}; Path=/; Secure; SameSite=None");
 		}
 	}
 	function killCookie() {
@@ -336,13 +336,13 @@ class NTBBSession {
 		if ($this->sid) {
 			$this->scookie = ',,' . $this->sid;
 
-			// setcookie('sid', $this->scookie, ['expires' => time() + (363)*24*60*60, 'path' => '/', 'domain' => play.pseudo.gq, 'secure' => true, 'httponly' => true, 'samesite' => 'None']);
+			// setcookie('sid', $this->scookie, ['expires' => time() + (363)*24*60*60, 'path' => '/', 'domain' => play.othermetas.com, 'secure' => true, 'httponly' => true, 'samesite' => 'None']);
 			$encodedcookie = rawurlencode($this->scookie);
-			// header("Set-Cookie: sid=$encodedcookie; Max-Age=31363200; Domain={play.pseudo.gq}; Path=/; Secure; SameSite=None");
+			// header("Set-Cookie: sid=$encodedcookie; Max-Age=31363200; Domain={play.othermetas.com}; Path=/; Secure; SameSite=None");
 		} else {
 			$setcookie = setcookie('sid', '', $ctime - 60*60*24*2, '/','', true, true);
-			// setcookie('sid', '', ['expires' => time() - 60*60*24*2, 'path' => '/', 'domain' => play.pseudo.gq, 'secure' => true, 'httponly' => true, 'samesite' => 'None']);
-			// header("Set-Cookie: sid=; Max-Age=0; Domain={play.pseudo.gq}; Path=/; Secure; SameSite=None");
+			// setcookie('sid', '', ['expires' => time() - 60*60*24*2, 'path' => '/', 'domain' => play.othermetas.com, 'secure' => true, 'httponly' => true, 'samesite' => 'None']);
+			// header("Set-Cookie: sid=; Max-Age=0; Domain={play.othermetas.com}; Path=/; Secure; SameSite=None");
 		}
 	}
 

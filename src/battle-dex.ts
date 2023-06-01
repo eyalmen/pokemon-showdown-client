@@ -179,16 +179,19 @@ const Dex = new class implements ModdedDex {
 
 	pokeballs: string[] | null = null;
 
-	resourcePrefix = (() => {
-		let prefix = '';
-		if (window.document?.location?.protocol !== 'http:') prefix = 'https:';
-		return `${prefix}//${window.Config ? Config.routes.client : 'play.pokemonshowdown.com'}/`;
-	})();
+	// resourcePrefix = (() => {
+	// 	let prefix = '';
+	// 	if (window.document?.location?.protocol !== 'http:') prefix = 'https:';
+	// 	return `${prefix}//${window.Config ? Config.routes.client : 'play.pokemonshowdown.com'}/`;
+	// })();
 
-	fxPrefix = (() => {
-		const protocol = (window.document?.location?.protocol !== 'http:') ? 'https:' : '';
-		return `${protocol}//${window.Config ? Config.routes.client : 'play.pokemonshowdown.com'}/fx/`;
-	})();
+	// fxPrefix = (() => {
+	// 	const protocol = (window.document?.location?.protocol !== 'http:') ? 'https:' : '';
+	// 	return `${protocol}//${window.Config ? Config.routes.client : 'play.pokemonshowdown.com'}/fx/`;
+	// })();
+
+	resourcePrefix = 'https://raw.githubusercontent.com/eyalmen/sprites/master/';
+	fxPrefix = 'https://raw.githubusercontent.com/eyalmen/sprites/master/fx/';
 
 	loadedSpriteData = {xy: 1, bw: 0};
 	moddedDexes: {[mod: string]: ModdedDex} = {};
@@ -235,8 +238,12 @@ const Dex = new class implements ModdedDex {
 		cavatars["woopa"] = "png";
 		cavatars["demirab"] = "gif";
 		cavatars["magnezone"] = "gif";
+		cavatars["gardevoir1"] = "png";
+		cavatars["gardevoir2"] = "png";
+		cavatars["gardevoir3"] = "png";
+		cavatars["gardevoir4"] = "png";
 		if (cavatars[avatar]) {
-			url = Dex.resourcePrefix + 'sprites/trainers/' + Dex.sanitizeName(avatar || 'unknown') + '.' + cavatars[avatar];
+			url = Dex.resourcePrefix + 'sprites/trainers-custom/' + Dex.sanitizeName(avatar || 'unknown') + '.' + cavatars[avatar];
 		}
 
 		return url;

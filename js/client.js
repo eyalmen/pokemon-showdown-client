@@ -2624,7 +2624,7 @@ function toId() {
 
 			data.description = JSON.parse(
 				$.ajax({
-					url: 'https://play.pseudo.gq/action.php',
+					url: 'https://play.othermetas.com/action.php',
 					type: 'POST', 
 					data: { 
 						act: 'getdescription', 

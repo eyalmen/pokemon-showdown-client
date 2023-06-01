@@ -252,6 +252,8 @@
 				nubl: "NUBL",
 				publ: "PUBL",
 				donotuse: "Do Not Use",
+				dnuu: "DNUU",
+				cu: "CU",
 			};
 			var tier = {name: tierTable[id]};
 			return this.renderTierRow(tier, matchStart, matchLength, errorMessage);

@@ -551,7 +551,7 @@ abstract class BattleTypedSearch<T extends SearchType> {
 	set: PokemonSet | null = null;
 
 	protected formatType: 'doubles' | 'bdsp' | 'deluxe' | "regionaldeluxe" |'bdspdoubles' | 'letsgo' | 'metronome' | 'natdex' | 'nfe' |
-	'dlc1' | 'dlc1doubles' | 'stadium' | 'custom' | 'dnucap' | 'rebalanced' | null = null;
+	'dlc1' | 'dlc1doubles' | 'stadium' | 'custom' | 'dnucap' | 'rebalanced' | 'dnuroa' | 'cu' | null = null;
 
 	/**
 	 * Cached copy of what the results list would be with only base filters
@@ -592,8 +592,10 @@ abstract class BattleTypedSearch<T extends SearchType> {
 		this.baseResults = null;
 		this.baseIllegalResults = null;
 
+		var gen;
+
 		if (format.slice(0, 3) === 'gen') {
-			const gen = (Number(format.charAt(3)) || 6);
+			gen = (Number(format.charAt(3)) || 6);
 			format = (format.slice(4) || 'customgame') as ID;
 			this.dex = Dex.forGen(gen);
 		} else if (!format) {
@@ -624,9 +626,18 @@ abstract class BattleTypedSearch<T extends SearchType> {
 			format = format.slice(4) as ID;
 			this.dex = Dex.mod('gen8bdsp' as ID);
 		}
+		if (format.includes('letsgo')) {
+			this.formatType = 'letsgo';
+			this.dex = Dex.mod('gen7letsgo' as ID);
+		}
 		if (format.includes('oud') || format.includes('donotuse') || format.includes('dnu')) {
 			this.dex = Dex.mod('gen9deluxe' as ID);
 			this.formatType = 'deluxe';
+		}
+		if (format.includes('donotuse') && gen !== 9) {
+			// @ts-ignore
+			this.dex = Dex.mod("gen" + gen.toString() + format.replace('donotuse', 'dnu') as ID);
+			this.formatType = 'dnuroa';
 		}
 		if (format.includes('rebalanced')) {
 			this.dex = Dex.mod('gen9rebalanced' as ID);
@@ -636,8 +647,11 @@ abstract class BattleTypedSearch<T extends SearchType> {
 			this.dex = Dex.mod('gen9dnucap' as ID);
 			this.formatType = 'dnucap';
 		}
+		if (format === ('cu')) {
+			this.dex = Dex.mod('gen9cu' as ID);
+			this.formatType = 'cu';
+		}
 		if (format.includes('uud')) {
-			console.log("gen9uud 614");
 			this.dex = Dex.mod('gen9regionaldeluxe' as ID);
 			this.formatType = 'regionaldeluxe';
 		}
@@ -648,10 +662,7 @@ abstract class BattleTypedSearch<T extends SearchType> {
 		if (format.includes('doubles') && this.dex.gen > 4 && !this.formatType) this.formatType = 'doubles';
 		if (format === 'partnersincrime') this.formatType = 'doubles';
 		if (format.startsWith('ffa') || format === 'freeforall') this.formatType = 'doubles';
-		if (format.includes('letsgo')) {
-			this.formatType = 'letsgo';
-			this.dex = Dex.mod('gen7letsgo' as ID);
-		}
+
 		if (format.includes('nationaldex') || format.startsWith('nd') || format.includes('natdex')) {
 			format = (format.startsWith('nd') ? format.slice(2) :
 				format.includes('natdex') ? format.slice(6) : format.slice(11)) as ID;
@@ -755,10 +766,13 @@ abstract class BattleTypedSearch<T extends SearchType> {
 	}
 	protected firstLearnsetid(speciesid: ID) {
 		let table = BattleTeambuilderTable;
+		let gen = this.dex.gen;
 		if (this.formatType?.startsWith('bdsp')) table = table['gen8bdsp'];
 		if (this.formatType === 'letsgo') table = table['gen7letsgo'];
 		if (this.formatType === 'deluxe') table = table['gen9deluxe'];
+		if (this.formatType === 'dnuroa') table = table["gen" + gen + this.format.replace('donotuse', 'dnu')];
 		if (this.formatType === 'dnucap') table = table['gen9dnucap'];
+		if (this.formatType === 'cu') {table = table['gen9cu'];}
 		if (this.formatType === 'rebalanced') table = table['gen9rebalanced'];
 		if (this.formatType === 'regionaldeluxe') table = table['gen9regionaldeluxe'];
 		// if (this.formatType === 'custom') table = table[]
@@ -816,10 +830,13 @@ abstract class BattleTypedSearch<T extends SearchType> {
 		let learnsetid = this.firstLearnsetid(speciesid);
 		while (learnsetid) {
 			let table = BattleTeambuilderTable;
+			let gen = this.dex.gen;
 			if (this.formatType?.startsWith('bdsp')) table = table['gen8bdsp'];
 			if (this.formatType === 'letsgo') table = table['gen7letsgo'];
 			if (this.formatType === 'deluxe') table = table['gen9deluxe'];
+			if (this.formatType === 'dnuroa') table = table["gen" + gen + this.format.replace('donotuse', 'dnu')];
 			if (this.formatType === 'dnucap') table = table['gen9dnucap'];
+			if (this.formatType === 'cu') {table = table['gen9cu'];}
 			if (this.formatType === 'rebalanced') table = table['gen9rebalanced'];
 			if (this.formatType === 'regionaldeluxe') table = table['gen9regionaldeluxe'];
 			let learnset = table.learnsets[learnsetid];
@@ -842,7 +859,9 @@ abstract class BattleTypedSearch<T extends SearchType> {
 			this.formatType === 'letsgo' ? 'gen7letsgo' :
 			this.formatType === 'bdsp' ? 'gen8bdsp' :
 			this.formatType === 'deluxe' ? 'gen9deluxe' :
+			this.formatType === 'dnuroa' ? `gen${gen}dnu` :
 			this.formatType === 'dnucap' ? 'gen9dnucap' :
+			this.formatType === 'cu' ? 'gen9cu' :
 			this.formatType === 'rebalanced' ? 'gen9rebalanced' :
 			this.formatType === 'regionaldeluxe' ? 'gen9regionaldeluxe' :
 			this.formatType === 'bdspdoubles' ? 'gen8bdspdoubles' :
@@ -943,7 +962,7 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 			table['gen' + dex.gen + 'doubles'] && dex.gen > 4 &&
 			this.formatType !== 'letsgo' && this.formatType !== 'bdspdoubles' && this.formatType !== 'dlc1doubles' &&
 			(
-				format.includes('doubles') || format.includes('triples') ||
+				(format.includes('doubles') && !format.includes ("donotusedoubles")) || format.includes('triples') ||
 				format === 'freeforall' || format.startsWith('ffa') ||
 				format === 'partnersincrime'
 			)
@@ -958,6 +977,10 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 			table = table['gen9deluxe'];
 		} else if (this.formatType?.startsWith("dnucap")) {
 			table = table['gen9dnucap'];
+		} else if (this.formatType?.startsWith("cu")) {
+			table = table['gen9cu'];
+		} else if (this.formatType === 'dnuroa') {
+			table = table['gen' + dex.gen + format.replace('donotuse', 'dnu')];
 		} else if (this.formatType === 'regionaldeluxe') {
 			table = table['gen9regionaldeluxe'];
 		} else if (this.formatType === 'rebalanced') {
@@ -1002,13 +1025,17 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 				tierSet = tierSet.slice(slices.Regular);
 			}
 		} else if (format === 'ou' || format.includes("rebalancedou")) tierSet = tierSet.slice(slices.OU);
+		else if (format === 'nu' || format.includes("rebalancednu")) tierSet = tierSet.slice(slices.NU || slices.RU || slices.UU);
 		else if (format === "oud") tierSet = tierSet.slice(slices.OUD);
 		else if (format === "uud") tierSet = tierSet.slice(slices.UUD);
-		else if (format.includes("donotuse") || format.includes("dnu")) tierSet = tierSet.slice(slices['Do Not Use']);
+		else if (format === 'cu') {
+			tierSet = tierSet.slice(slices["CU"]);
+		}
+		else if (format.includes("dnuu")) tierSet = tierSet.slice(slices['DNUU']);
+		else if (format.includes("donotuse") || format.includes("dnu") || format.includes("dnucap") && !format.includes("dnuu")) tierSet = tierSet.slice(slices['Do Not Use']);
 		else if (format === 'uu' || format.includes("rebalanceduu")) tierSet = tierSet.slice(slices.UU);
 		else if (format === 'ru' || format.includes("rebalancedru")) tierSet = tierSet.slice(slices.RU || slices.UU);
-		else if (format === 'nu') tierSet = tierSet.slice(slices.NU || slices.RU || slices.UU);
-		else if (format === 'pu') tierSet = tierSet.slice(slices.PU || slices.NU);
+		else if (format === 'pu' || format.includes("rebalancedpu")) tierSet = tierSet.slice(slices.PU || slices.NU);
 		else if (format === 'zu') tierSet = tierSet.slice(slices.ZU || slices.PU || slices.NU);
 		else if (format === 'lc' || format === 'lcuu' || format.startsWith('lc') || (format !== 'caplc' && format.endsWith('lc'))) tierSet = tierSet.slice(slices.LC);
 		else if (format === 'cap') tierSet = tierSet.slice(0, slices.AG || slices.Uber).concat(tierSet.slice(slices.OU));
@@ -1215,12 +1242,15 @@ class BattleItemSearch extends BattleTypedSearch<'item'> {
 			table = table['gen' + this.dex.gen + 'natdex'];
 		} else if (this.formatType === "deluxe") {
 			table = table['gen9deluxe'];
+		}  else if (this.formatType === "dnuroa") {
+			table = table['gen' + this.dex.gen + this.format.replace('donotuse', 'dnu')]; 
 		} else if (this.formatType === "dnucap") {
 			table = table['gen9dnucap'];
+		} else if (this.formatType === "cu") {
+			table = table['gen9cu'];
 		} else if (this.formatType === "rebalanced") {
 			table = table['gen9rebalanced'];
 		} else if (this.formatType === "regionaldeluxe") {
-			console.log("formatType is regionaldeluxe");
 			table = table['gen9regionaldeluxe'];
 		} else if (this.formatType === 'metronome') {
 			table = table['gen' + this.dex.gen + 'metronome'];
@@ -1546,10 +1576,11 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 		let sketch = false;
 		let gen = '' + dex.gen;
 		let lsetTable = BattleTeambuilderTable;
-		console.log("format type: " + this.formatType);
 		if (this.formatType?.startsWith('bdsp')) lsetTable = lsetTable['gen8bdsp'];
 		if (this.formatType?.startsWith('deluxe')) {lsetTable = lsetTable['gen9deluxe'];}
+		if (this.formatType?.startsWith('dnuroa')) {lsetTable = lsetTable['gen' + gen + format.replace('donotuse', 'dnu')];}
 		if (this.formatType?.startsWith('dnucap')) {lsetTable = lsetTable['gen9dnucap'];}
+		if (this.formatType?.startsWith('cu')) {lsetTable = lsetTable['gen9cu'];}
 		if (this.formatType?.startsWith('rebalanced')) {lsetTable = lsetTable['gen9rebalanced'];}
 		if (this.formatType?.startsWith('regionaldeluxe')) {lsetTable = lsetTable['gen9regionaldeluxe'];}
 		if (this.formatType === 'letsgo') lsetTable = lsetTable['gen7letsgo'];

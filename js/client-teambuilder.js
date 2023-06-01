@@ -50,6 +50,17 @@
 					'gen9rebalanced': ['gen9rebalanced'],
 					'gen9regionaldeluxe': ['uud'],
 					'gen9dnucap': ['dnucap'],
+					'gen1dnu': ['gen1donotuse'],
+					'gen2dnu': ['gen2donotuse'],
+					'gen3dnu': ['gen3donotuse'],
+					'gen4dnu': ['gen4donotuse'],
+					'gen5dnu': ['gen5donotuse'],
+					'gen6dnu': ['gen6donotuse'],
+					'gen7dnu': ['gen7donotuse'],
+					'gen7letsgodnu': ['letsgodonotuse'],
+					'gen8dnu': ['gen8donotuse'],
+					'gen9cu': ['gen9cu'],
+
 				}
 
 				for (const mod in teambuilderMods) {
@@ -727,14 +738,24 @@
 			this.curTeam.gen = this.getGen(this.curTeam.format);
 			this.curTeam.dex = Dex.forGen(this.curTeam.gen);
 
-			const teambuilderMods = {
-				'gen7letsgo': ['letsgo'],
-				'gen8bdsp': ['bdsp'],
-				'gen9deluxe': ['oud', 'donotuse', 'dnu'],
-				'gen9rebalanced': ['gen9rebalanced'],
-				'gen9regionaldeluxe': ['uud'],
-				'gen9dnucap': ['dnucap'],
-			}
+				const teambuilderMods = {
+ 					'gen7letsgo': ['letsgo'],
+ 					'gen8bdsp': ['bdsp'],
+ 					'gen9deluxe': ['oud', 'donotuse', 'dnu'],
+ 					'gen9rebalanced': ['gen9rebalanced'],
+ 					'gen9regionaldeluxe': ['uud'],
+ 					'gen9dnucap': ['dnucap'],
+ 					'gen1dnu': ['gen1donotuse'],
+ 					'gen2dnu': ['gen2donotuse'],
+ 					'gen3dnu': ['gen3donotuse'],
+ 					'gen4dnu': ['gen4donotuse'],
+ 					'gen5dnu': ['gen5donotuse'],
+ 					'gen6dnu': ['gen6donotuse'],
+ 					'gen7dnu': ['gen7donotuse'],
+ 					'gen7letsgodnu': ['letsgodonotuse'],
+ 					'gen8dnu': ['gen8donotuse'],
+					'gen9cu': ['gen9cu'],
+ 				}
 
 			for (const mod in teambuilderMods) {
 				for (const format of teambuilderMods[mod]) {
@@ -1319,8 +1340,8 @@
 			buf += '</div></div>';
 
 			buf += '<div class="setrow">';
-			// if (this.curTeam.gen > 1 && !isLetsGo) buf += '<div class="setcell setcell-item"><label>Item</label><input type="text" name="item" class="textbox chartinput" value="' + BattleLog.escapeHTML(set.item) + '" /></div>';
-			if (this.curTeam.gen > 1) buf += '<div class="setcell setcell-item"><label>Item</label><input type="text" name="item" class="textbox chartinput" value="' + BattleLog.escapeHTML(set.item) + '" autocomplete="off" /></div>';
+			if (this.curTeam.gen > 1 && !isLetsGo) buf += '<div class="setcell setcell-item"><label>Item</label><input type="text" name="item" class="textbox chartinput" value="' + BattleLog.escapeHTML(set.item) + '" /></div>';
+			// if (this.curTeam.gen > 1) buf += '<div class="setcell setcell-item"><label>Item</label><input type="text" name="item" class="textbox chartinput" value="' + BattleLog.escapeHTML(set.item) + '" autocomplete="off" /></div>';
 			if (this.curTeam.gen > 2 && !isLetsGo) buf += '<div class="setcell setcell-ability"><label>Ability</label><input type="text" name="ability" class="textbox chartinput" value="' + BattleLog.escapeHTML(set.ability) + '" autocomplete="off" /></div>';
 			buf += '</div></div>';
 
@@ -1541,14 +1562,24 @@
 			this.curTeam.gen = this.getGen(this.curTeam.format);
 			this.curTeam.dex = Dex.forGen(this.curTeam.gen);
 			
-			const teambuilderMods = {
-				'gen7letsgo': ['letsgo'],
-				'gen8bdsp': ['bdsp'],
-				'gen9deluxe': ['oud', 'donotuse', 'dnu'],
-				'gen9rebalanced': ['gen9rebalanced'],
-				'gen9regionaldeluxe': ['uud'],
-				'gen9dnucap': ['dnucap'],
-			}
+				const teambuilderMods = {
+ 					'gen7letsgo': ['letsgo'],
+ 					'gen8bdsp': ['bdsp'],
+ 					'gen9deluxe': ['oud', 'donotuse', 'dnu'],
+ 					'gen9rebalanced': ['gen9rebalanced'],
+ 					'gen9regionaldeluxe': ['uud'],
+ 					'gen9dnucap': ['dnucap'],
+ 					'gen1dnu': ['gen1donotuse'],
+ 					'gen2dnu': ['gen2donotuse'],
+ 					'gen3dnu': ['gen3donotuse'],
+ 					'gen4dnu': ['gen4donotuse'],
+ 					'gen5dnu': ['gen5donotuse'],
+ 					'gen6dnu': ['gen6donotuse'],
+ 					'gen7dnu': ['gen7donotuse'],
+ 					'gen7letsgodnu': ['letsgodonotuse'],
+ 					'gen8dnu': ['gen8donotuse'],
+					 'gen9cu': ['gen9cu'],
+					}
 
 			for (const mod in teambuilderMods) {
 				for (const format of teambuilderMods[mod]) {
@@ -1878,6 +1909,17 @@
 					'gen9rebalanced': ['gen9rebalanced'],
 					'gen9regionaldeluxe': ['uud'],
 					'gen9dnucap': ['dnucap'],
+					'gen1dnu': ['gen1donotuse'],
+					'gen2dnu': ['gen2donotuse'],
+					'gen3dnu': ['gen3donotuse'],
+					'gen4dnu': ['gen4donotuse'],
+					'gen5dnu': ['gen5donotuse'],
+					'gen6dnu': ['gen6donotuse'],
+					'gen7dnu': ['gen7donotuse'],
+					'gen7letsgodnu': ['letsgodonotuse'],
+					'gen8dnu': ['gen8donotuse'],
+					'gen9cu': ['gen9cu'],
+
 				}
 
 				for (const mod in teambuilderMods) {

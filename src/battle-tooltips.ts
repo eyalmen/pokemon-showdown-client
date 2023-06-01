@@ -1354,6 +1354,16 @@ class BattleTooltips {
 			'gen9rebalanced': ['gen9rebalanced'],
 			'gen9regionaldeluxe': ['uud'],
 			'gen9dnucap': ['dnucap'],
+			'gen1dnu': ['gen1donotuse'],
+			'gen2dnu': ['gen2donotuse'],
+			'gen3dnu': ['gen3donotuse'],
+			'gen4dnu': ['gen4donotuse'],
+			'gen5dnu': ['gen5donotuse'],
+			'gen6dnu': ['gen6donotuse'],
+			'gen7dnu': ['gen7donotuse'],
+			'gen7letsgodnu': ['letsgodonotuse'],
+			'gen8dnu': ['gen8donotuse'],
+			'gen9cu': ['gen9cu'],
 		}
 
 		var dexMod = Dex.modid;
@@ -2152,6 +2162,16 @@ class BattleTooltips {
 					'gen9rebalanced': ['gen9rebalanced'],
 					'gen9regionaldeluxe': ['uud'],
 					'gen9dnucap': ['dnucap'],
+					'gen1dnu': ['gen1donotuse'],
+					'gen2dnu': ['gen2donotuse'],
+					'gen3dnu': ['gen3donotuse'],
+					'gen4dnu': ['gen4donotuse'],
+					'gen5dnu': ['gen5donotuse'],
+					'gen6dnu': ['gen6donotuse'],
+					'gen7dnu': ['gen7donotuse'],
+					'gen7letsgodnu': ['letsgodonotuse'],
+					'gen8dnu': ['gen8donotuse'],
+					'gen9cu': ['gen9cu'],
 				}
 		
 				var dexMod = Dex.modid;
