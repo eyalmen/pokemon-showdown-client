@@ -1350,7 +1350,7 @@ class BattleTooltips {
 		const teambuilderMods = {
 			'gen7letsgo': ['letsgo'],
 			'gen8bdsp': ['bdsp'],
-			'gen9deluxe': ['oud', 'donotuse', 'dnu'],
+			'gen9deluxe': ['oud', 'donotuse', 'dnu', 'dnru'],
 			'gen9rebalanced': ['gen9rebalanced'],
 			'gen9regionaldeluxe': ['uud'],
 			'gen9dnucap': ['dnucap'],
@@ -2164,7 +2164,7 @@ class BattleTooltips {
 				const teambuilderMods = {
 					'gen7letsgo': ['letsgo'],
 					'gen8bdsp': ['bdsp'],
-					'gen9deluxe': ['oud', 'donotuse', 'dnu'],
+					'gen9deluxe': ['oud', 'donotuse', 'dnu', 'dnru'],
 					'gen9rebalanced': ['gen9rebalanced'],
 					'gen9regionaldeluxe': ['uud'],
 					'gen9dnucap': ['dnucap'],

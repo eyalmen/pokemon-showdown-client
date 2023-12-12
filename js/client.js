@@ -728,6 +728,7 @@ function toId() {
 		connect: function () {
 			if (this.down) return;
 
+			
 			if (Config.bannedHosts) {
 				for (var i = 0; i < Config.bannedHosts.length; i++) {
 					var host = Config.bannedHosts[i];

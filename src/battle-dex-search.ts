@@ -1032,7 +1032,8 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 			tierSet = tierSet.slice(slices["CU"]);
 		}
 		else if (format.includes("dnuu")) tierSet = tierSet.slice(slices['DNUU']);
-		else if (format.includes("donotuse") || format.includes("dnu") || format.includes("dnucap") && !format.includes("dnuu")) tierSet = tierSet.slice(slices['Do Not Use']);
+		else if (format.includes("dnru")) tierSet = tierSet.slice(slices['DNRU']);
+		else if (format.includes("donotuse") || format.includes("dnu") || format.includes("dnucap") && !(format.includes("dnuu") || format.includes("dnru"))) tierSet = tierSet.slice(slices['Do Not Use']);
 		else if (format === 'uu' || format.includes("rebalanceduu")) tierSet = tierSet.slice(slices.UU);
 		else if (format === 'ru' || format.includes("rebalancedru")) tierSet = tierSet.slice(slices.RU || slices.UU);
 		else if (format === 'pu' || format.includes("rebalancedpu")) tierSet = tierSet.slice(slices.PU || slices.NU);

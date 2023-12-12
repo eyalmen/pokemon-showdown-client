@@ -143,7 +143,7 @@ function compileToDir(srcDir, destDir, opts = {}) {
     if (!res) return 0;
 
     outputFileSync(dest, res, opts);
-    fs.chmodSync(dest, fs.statSync(src).mode);
+    // fs.chmodSync(dest, fs.statSync(src).mode);
 
     if (VERBOSE) {
       console.log(src + " -> " + dest);

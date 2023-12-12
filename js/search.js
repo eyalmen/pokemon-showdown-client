@@ -253,6 +253,7 @@
 				publ: "PUBL",
 				donotuse: "Do Not Use",
 				dnuu: "DNUU",
+				dnru: "DNRU",
 				cu: "CU",
 			};
 			var tier = {name: tierTable[id]};
