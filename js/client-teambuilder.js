@@ -1906,6 +1906,7 @@
 					'gen7letsgo': ['letsgo'],
 					'gen8bdsp': ['bdsp'],
 					'gen9deluxe': ['oud', 'donotuse', 'dnu', 'dnru'],
+					'gen9dnu': ['gen9dnu'],
 					'gen9rebalanced': ['gen9rebalanced'],
 					'gen9regionaldeluxe': ['uud'],
 					'gen9dnucap': ['dnucap'],
